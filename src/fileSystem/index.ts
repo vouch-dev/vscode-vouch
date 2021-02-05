@@ -15,17 +15,17 @@ import {
   workspace
 } from "vscode";
 import { FS_SCHEME } from "../constants";
-import { CodeTour, CodeTourStep, store } from "../store";
+import { CodeTourStep, store, Vouch } from "../store";
 
 export class CodeTourFileSystemProvider implements FileSystemProvider {
   private count = 0;
 
-  getCurrentTourStep(): [CodeTour, CodeTourStep] {
+  getCurrentTourStep(): [Vouch, CodeTourStep] {
     const tour = store.activeTour!.tour;
     return [tour, tour.steps[store.activeTour!.step]];
   }
 
-  updateTour(tour: CodeTour) {
+  updateTour(tour: Vouch) {
     const tourUri = Uri.parse(tour.id);
 
     const newTour = {
@@ -87,24 +87,24 @@ export class CodeTourFileSystemProvider implements FileSystemProvider {
     options: { overwrite: boolean }
   ): Promise<void> {
     throw FileSystemError.NoPermissions(
-      "CodeTour doesn't support copying files."
+      "Vouch doesn't support copying files."
     );
   }
 
   createDirectory(uri: Uri): void {
     throw FileSystemError.NoPermissions(
-      "CodeTour doesn't support directories."
+      "Vouch doesn't support directories."
     );
   }
 
   async delete(uri: Uri, options: { recursive: boolean }): Promise<void> {
     throw FileSystemError.NoPermissions(
-      "CodeTour doesn't support deleting files."
+      "Vouch doesn't support deleting files."
     );
   }
 
   async readDirectory(uri: Uri): Promise<[string, FileType][]> {
-    throw FileSystemError.NoPermissions("CodeTour doesnt support directories.");
+    throw FileSystemError.NoPermissions("Vouch doesnt support directories.");
   }
 
   watch(
@@ -112,7 +112,7 @@ export class CodeTourFileSystemProvider implements FileSystemProvider {
     options: { recursive: boolean; excludes: string[] }
   ): Disposable {
     throw FileSystemError.NoPermissions(
-      "CodeTour doesn't support watching files."
+      "Vouch doesn't support watching files."
     );
   }
 }

@@ -4,7 +4,7 @@
 import { reaction } from "mobx";
 import * as vscode from "vscode";
 import { FS_SCHEME_CONTENT, ICON_URL } from "../constants";
-import { CodeTour, CodeTourStep, store } from "../store";
+import { CodeTourStep, store, Vouch } from "../store";
 import { getStepFileUri, getWorkspaceUri } from "../utils";
 
 const DISABLED_SCHEMES = [FS_SCHEME_CONTENT, "comment"];
@@ -16,7 +16,7 @@ const TOUR_DECORATOR = vscode.window.createTextEditorDecorationType({
   overviewRulerLane: vscode.OverviewRulerLane.Right
 });
 
-type CodeTourStepTuple = [CodeTour, CodeTourStep, number];
+type CodeTourStepTuple = [Vouch, CodeTourStep, number];
 
 // TODO: Add support for regex/market steps.
 async function getTourSteps(
@@ -78,10 +78,9 @@ function registerHoverProvider() {
 
       const hovers = tourSteps.map(([tour, _, stepNumber]) => {
         const args = encodeURIComponent(JSON.stringify([tour.id, stepNumber]));
-        const command = `command:codetour._startTourById?${args}`;
-        return `CodeTour: ${tour.title} (Step #${
-          stepNumber + 1
-        }) &nbsp;[Start Tour](${command} "Start Tour")\n`;
+        const command = `command:vouch._startTourById?${args}`;
+        return `Vouch: ${tour.title} (Step #${stepNumber + 1
+          }) &nbsp;[Start Tour](${command} "Start Tour")\n`;
       });
 
       const content = new vscode.MarkdownString(hovers.join("\n"));

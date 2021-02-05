@@ -35,7 +35,7 @@ export interface CodeTourStep {
   markerTitle?: string;
 }
 
-export interface CodeTour {
+export interface Vouch {
   id: string;
   title: string;
   description?: string;
@@ -47,7 +47,7 @@ export interface CodeTour {
 }
 
 export interface ActiveTour {
-  tour: CodeTour;
+  tour: Vouch;
   step: number;
 
   // When recording, a tour can be active, without
@@ -64,13 +64,13 @@ export interface ActiveTour {
   // they're coming from somewhere other
   // then the active workspace (e.g. a
   // GistPad-managed repo).
-  tours?: CodeTour[];
+  tours?: Vouch[];
 }
 
 type CodeTourProgress = [string, number[]];
 
 export interface Store {
-  tours: CodeTour[];
+  tours: Vouch[];
   activeTour: ActiveTour | null;
   hasTours: boolean;
   isRecording: boolean;

@@ -6,11 +6,11 @@ import * as path from "path";
 import { Uri, workspace } from "vscode";
 import { CONTENT_URI, FS_SCHEME } from "./constants";
 import { api } from "./git";
-import { CodeTour, CodeTourStep, store } from "./store";
+import { CodeTourStep, store, Vouch } from "./store";
 
 const HEADING_PATTERN = /^#+\s*(.*)/;
 export function getStepLabel(
-  tour: CodeTour,
+  tour: Vouch,
   stepNumber: number,
   includeStepNumber: boolean = true,
   defaultToFileName: boolean = true
@@ -34,7 +34,7 @@ export function getStepLabel(
   return `${prefix}${label}`;
 }
 
-export function getTourTitle(tour: CodeTour) {
+export function getTourTitle(tour: Vouch) {
   if (tour.title.match(/^#?\d+\s-/)) {
     return tour.title.split("-")[1].trim();
   }
@@ -96,7 +96,7 @@ export async function getStepFileUri(
         repo.state.HEAD.name !== ref && // The tour refs the user's current branch
         repo.state.HEAD.commit !== ref && // The tour refs the user's HEAD commit
         repo.state.HEAD.commit !== // The tour refs a branch/tag that points at the user's HEAD commit
-          repo.state.refs.find(gitRef => gitRef.name === ref)?.commit
+        repo.state.refs.find(gitRef => gitRef.name === ref)?.commit
       ) {
         uri = await api.toGitUri(uri, ref);
       }
@@ -116,11 +116,11 @@ export function getWorkspaceKey() {
   return workspace.workspaceFile || workspace.workspaceFolders![0].uri;
 }
 
-export function getWorkspacePath(tour: CodeTour) {
+export function getWorkspacePath(tour: Vouch) {
   return getWorkspaceUri(tour)?.toString() || "";
 }
 
-export function getWorkspaceUri(tour: CodeTour): Uri | undefined {
+export function getWorkspaceUri(tour: Vouch): Uri | undefined {
   const tourUri = Uri.parse(tour.id);
   return (
     workspace.getWorkspaceFolder(tourUri)?.uri ||
@@ -128,7 +128,7 @@ export function getWorkspaceUri(tour: CodeTour): Uri | undefined {
   );
 }
 
-function getTourNumber(tour: CodeTour): number | undefined {
+function getTourNumber(tour: Vouch): number | undefined {
   const match = tour.title.match(/^#?(\d+)\s+-/);
   if (match) {
     return Number(match[1]);
@@ -139,7 +139,7 @@ export function getActiveTourNumber(): number | undefined {
   return getTourNumber(store.activeTour!.tour);
 }
 
-function getStepMarkerPrefix(tour: CodeTour): string | undefined {
+function getStepMarkerPrefix(tour: Vouch): string | undefined {
   if (tour.stepMarker) {
     return tour.stepMarker;
   } else {
@@ -175,16 +175,16 @@ export async function getStepMarkerForLine(uri: Uri, lineNumber: number) {
   }
 }
 
-function isMarkerTour(tour: CodeTour): boolean {
+function isMarkerTour(tour: Vouch): boolean {
   return !!getStepMarkerPrefix(tour);
 }
 
-function isMarkerStep(tour: CodeTour, stepNumber: number) {
+function isMarkerStep(tour: Vouch, stepNumber: number) {
   const step = tour.steps[stepNumber];
   return getStepMarkerPrefix(tour) && step.file && !step.line;
 }
 
-async function updateMarkerTitleForStep(tour: CodeTour, stepNumber: number) {
+async function updateMarkerTitleForStep(tour: Vouch, stepNumber: number) {
   if (!isMarkerStep(tour, stepNumber)) {
     return;
   }
@@ -208,7 +208,7 @@ async function updateMarkerTitleForStep(tour: CodeTour, stepNumber: number) {
   }
 }
 
-async function updateMarkerTitlesForTour(tour: CodeTour) {
+async function updateMarkerTitlesForTour(tour: Vouch) {
   if (!isMarkerTour(tour)) {
     return;
   }

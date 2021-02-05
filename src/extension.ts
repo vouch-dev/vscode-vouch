@@ -32,12 +32,12 @@ export async function activate(context: vscode.ExtensionContext) {
     registerDecorators();
 
     store.showMarkers = vscode.workspace
-      .getConfiguration("codetour")
+      .getConfiguration("vouch")
       .get("showMarkers", true);
 
     vscode.commands.executeCommand(
       "setContext",
-      "codetour:showingMarkers",
+      "vouch:showingMarkers",
       store.showMarkers
     );
 

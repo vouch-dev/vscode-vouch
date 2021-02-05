@@ -3,7 +3,7 @@
 
 import { comparer, runInAction, set } from "mobx";
 import * as vscode from "vscode";
-import { CodeTour, store } from ".";
+import { store, Vouch } from ".";
 import { EXTENSION_NAME, VSCODE_DIRECTORY } from "../constants";
 import { appendUriPath, readUriContents, updateMarkerTitles } from "../utils";
 import { endCurrentCodeTour } from "./actions";
@@ -55,7 +55,7 @@ export async function discoverTours(): Promise<void> {
 
 async function discoverMainTours(
   workspaceUri: vscode.Uri
-): Promise<CodeTour[]> {
+): Promise<Vouch[]> {
   const tours = await Promise.all(
     MAIN_TOUR_FILES.map(async tourFile => {
       try {
@@ -65,14 +65,14 @@ async function discoverMainTours(
         const tour = JSON.parse(mainTourContent);
         tour.id = decodeURIComponent(uri.toString());
         return tour;
-      } catch {}
+      } catch { }
     })
   );
 
   return tours.filter(tour => tour);
 }
 
-async function readTourDirectory(uri: vscode.Uri): Promise<CodeTour[]> {
+async function readTourDirectory(uri: vscode.Uri): Promise<Vouch[]> {
   try {
     const tourFiles = await vscode.workspace.fs.readDirectory(uri);
     const tours = await Promise.all(
@@ -95,16 +95,16 @@ async function readTourDirectory(uri: vscode.Uri): Promise<CodeTour[]> {
 
 async function readTourFile(
   tourUri: vscode.Uri
-): Promise<CodeTour | undefined> {
+): Promise<Vouch | undefined> {
   try {
     const tourContent = await readUriContents(tourUri);
     const tour = JSON.parse(tourContent);
     tour.id = decodeURIComponent(tourUri.toString());
     return tour;
-  } catch {}
+  } catch { }
 }
 
-async function discoverSubTours(workspaceUri: vscode.Uri): Promise<CodeTour[]> {
+async function discoverSubTours(workspaceUri: vscode.Uri): Promise<Vouch[]> {
   const tours = await Promise.all(
     SUB_TOUR_DIRECTORIES.map(directory => {
       const uri = appendUriPath(workspaceUri, directory);

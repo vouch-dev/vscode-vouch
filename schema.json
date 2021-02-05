@@ -1,8 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Schema for CodeTour tour files",
+  "title": "Schema for Vouch tour files",
   "type": "object",
-  "required": ["title", "steps"],
+  "required": [
+    "title",
+    "steps"
+  ],
   "properties": {
     "title": {
       "type": "string",
@@ -26,7 +29,9 @@
       "default": [],
       "items": {
         "type": "object",
-        "required": ["description"],
+        "required": [
+          "description"
+        ],
         "properties": {
           "file": {
             "type": "string",
@@ -78,12 +83,18 @@
           },
           "selection": {
             "type": "object",
-            "required": ["start", "end"],
+            "required": [
+              "start",
+              "end"
+            ],
             "description": "Text selection that's associated with the step.",
             "properties": {
               "start": {
                 "type": "object",
-                "required": ["line", "character"],
+                "required": [
+                  "line",
+                  "character"
+                ],
                 "description": "Starting position (line, column) of the text selection range.",
                 "properties": {
                   "line": {
@@ -98,7 +109,10 @@
               },
               "end": {
                 "type": "object",
-                "required": ["line", "character"],
+                "required": [
+                  "line",
+                  "character"
+                ],
                 "description": "Ending position (line, column) of the text selection range.",
                 "properties": {
                   "line": {

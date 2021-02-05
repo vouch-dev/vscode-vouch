@@ -6,7 +6,7 @@ import * as vscode from "vscode";
 import { EXTENSION_NAME } from "../constants";
 import { focusPlayer } from "../player";
 import { saveTour } from "../recorder/commands";
-import { CodeTour, store } from "../store";
+import { store, Vouch } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -88,9 +88,9 @@ export function registerPlayerCommands() {
     `${EXTENSION_NAME}.sendTextToTerminal`,
     async (text: string) => {
       if (!terminal) {
-        terminal = vscode.window.createTerminal("CodeTour");
+        terminal = vscode.window.createTerminal("Vouch");
         vscode.window.onDidCloseTerminal(term => {
-          if (term.name === "CodeTour") {
+          if (term.name === "Vouch") {
             terminal = null;
           }
         });
@@ -145,10 +145,10 @@ export function registerPlayerCommands() {
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.startTour`,
     async (
-      tour?: CodeTour | CodeTourNode,
+      tour?: Vouch | CodeTourNode,
       stepNumber?: number,
       workspaceRoot?: vscode.Uri,
-      tours?: CodeTour[]
+      tours?: Vouch[]
     ) => {
       if (tour) {
         const targetTour = tour instanceof CodeTourNode ? tour.tour : tour;
@@ -269,12 +269,12 @@ export function registerPlayerCommands() {
     store.showMarkers = showMarkers;
 
     vscode.workspace
-      .getConfiguration("codetour")
+      .getConfiguration("vouch")
       .update("showMarkers", showMarkers, vscode.ConfigurationTarget.Global);
 
     vscode.commands.executeCommand(
       "setContext",
-      "codetour:showingMarkers",
+      "vouch:showingMarkers",
       showMarkers
     );
   }

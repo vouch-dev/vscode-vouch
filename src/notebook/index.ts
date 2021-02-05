@@ -3,7 +3,7 @@
 
 import * as vscode from "vscode";
 import { EXTENSION_NAME, SMALL_ICON_URL } from "../constants";
-import { CodeTour } from "../store";
+import { Vouch } from "../store";
 import { getStepFileUri, getWorkspaceUri, readUriContents } from "../utils";
 
 class CodeTourNotebookProvider implements vscode.NotebookProvider {
@@ -16,7 +16,7 @@ class CodeTourNotebookProvider implements vscode.NotebookProvider {
 
     let contents = await readUriContents(editor.document.uri);
 
-    let tour = <CodeTour>JSON.parse(contents);
+    let tour = <Vouch>JSON.parse(contents);
     tour.id = editor.document.uri.toString();
 
     let steps: any[] = [];
@@ -42,7 +42,7 @@ class CodeTourNotebookProvider implements vscode.NotebookProvider {
     await editor.edit(editBuilder => {
       editBuilder.insert(
         0,
-        `## ![Icon](${SMALL_ICON_URL})&nbsp;&nbsp; CodeTour (${tour.title}) - ${steps.length} steps\n\n${tour.description}`,
+        `## ![Icon](${SMALL_ICON_URL})&nbsp;&nbsp; Vouch (${tour.title}) - ${steps.length} steps\n\n${tour.description}`,
         "markdown",
         vscode.CellKind.Markdown,
         [],
@@ -59,9 +59,8 @@ class CodeTourNotebookProvider implements vscode.NotebookProvider {
             {
               outputKind: vscode.CellOutputKind.Rich,
               data: {
-                "text/markdown": `_Step #${index + 1} of ${steps.length}:_ ${
-                  step.description
-                } ([View File](${step.uri}))`
+                "text/markdown": `_Step #${index + 1} of ${steps.length}:_ ${step.description
+                  } ([View File](${step.uri}))`
               }
             }
           ],
@@ -79,7 +78,7 @@ class CodeTourNotebookProvider implements vscode.NotebookProvider {
     document: vscode.NotebookDocument,
     cell: vscode.NotebookCell | undefined,
     token: vscode.CancellationToken
-  ): Promise<void> {}
+  ): Promise<void> { }
 
   async save(document: vscode.NotebookDocument): Promise<boolean> {
     return true;

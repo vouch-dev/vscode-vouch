@@ -1,6 +1,6 @@
 {
-  "name": "codetour",
-  "displayName": "CodeTour",
+  "name": "vouch",
+  "displayName": "Vouch",
   "description": "VS Code extension that allows you to record and playback guided tours of codebases, directly within the editor",
   "publisher": "vsls-contrib",
   "version": "0.0.43",
@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/codetour"
+    "url": "https://github.com/microsoft/vouch"
   },
   "bugs": {
-    "url": "https://github.com/microsoft/codetour/issues"
+    "url": "https://github.com/microsoft/vouch/issues"
   },
-  "homepage": "https://github.com/microsoft/codetour#readme",
+  "homepage": "https://github.com/microsoft/vouch#readme",
   "license": "MIT",
   "icon": "images/icon.png",
   "engines": {
@@ -39,9 +39,9 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "CodeTour",
+      "title": "Vouch",
       "properties": {
-        "codetour.showMarkers": {
+        "vouch.showMarkers": {
           "type": "boolean",
           "default": true,
           "description": "Specifies whether or not to show tour markers in the editor gutter."
@@ -50,534 +50,534 @@
     },
     "commands": [
       {
-        "command": "codetour.addContentStep",
+        "command": "vouch.addContentStep",
         "title": "Add Tour Step",
-        "category": "CodeTour"
+        "category": "Vouch"
       },
       {
-        "command": "codetour.addDirectoryStep",
-        "title": "Add CodeTour Step"
+        "command": "vouch.addDirectoryStep",
+        "title": "Add Vouch Step"
       },
       {
-        "command": "codetour.addSelectionStep",
-        "title": "Add CodeTour Step"
+        "command": "vouch.addSelectionStep",
+        "title": "Add Vouch Step"
       },
       {
-        "command": "codetour.addTourStep",
+        "command": "vouch.addTourStep",
         "title": "Add Step to Tour",
         "enablement": "!commentIsEmpty"
       },
       {
-        "command": "codetour.changeTourDescription",
+        "command": "vouch.changeTourDescription",
         "title": "Change Description"
       },
       {
-        "command": "codetour.changeTourRef",
+        "command": "vouch.changeTourRef",
         "title": "Change Git Ref"
       },
       {
-        "command": "codetour.changeTourStepLine",
+        "command": "vouch.changeTourStepLine",
         "title": "Change Line"
       },
       {
-        "command": "codetour.changeTourStepTitle",
+        "command": "vouch.changeTourStepTitle",
         "title": "Change Title"
       },
       {
-        "command": "codetour.changeTourTitle",
+        "command": "vouch.changeTourTitle",
         "title": "Change Title"
       },
       {
-        "command": "codetour.resetProgress",
+        "command": "vouch.resetProgress",
         "title": "Reset Progress",
-        "category": "CodeTour"
+        "category": "Vouch"
       },
       {
-        "command": "codetour.resetTourProgress",
+        "command": "vouch.resetTourProgress",
         "title": "Reset Progress"
       },
       {
-        "command": "codetour.deleteTourStep",
+        "command": "vouch.deleteTourStep",
         "title": "Delete Step"
       },
       {
-        "command": "codetour.deleteTour",
+        "command": "vouch.deleteTour",
         "title": "Delete Tour"
       },
       {
-        "command": "codetour.editTourAtStep",
+        "command": "vouch.editTourAtStep",
         "title": "Edit Step"
       },
       {
-        "command": "codetour.editTour",
+        "command": "vouch.editTour",
         "title": "Edit Tour",
-        "category": "CodeTour",
+        "category": "Vouch",
         "icon": "$(edit)"
       },
       {
-        "command": "codetour.endTour",
+        "command": "vouch.endTour",
         "title": "End Tour",
-        "category": "CodeTour",
+        "category": "Vouch",
         "icon": "$(debug-stop)"
       },
       {
-        "command": "codetour.exportTour",
+        "command": "vouch.exportTour",
         "title": "Export Tour..."
       },
       {
-        "command": "codetour.hideMarkers",
+        "command": "vouch.hideMarkers",
         "title": "Hide Tour Markers",
-        "category": "CodeTour",
+        "category": "Vouch",
         "icon": "$(eye-closed)"
       },
       {
-        "command": "codetour.makeTourPrimary",
+        "command": "vouch.makeTourPrimary",
         "title": "Make Primary"
       },
       {
-        "command": "codetour.moveTourStepForward",
+        "command": "vouch.moveTourStepForward",
         "title": "Move Down",
         "icon": "$(arrow-down)"
       },
       {
-        "command": "codetour.moveTourStepBack",
+        "command": "vouch.moveTourStepBack",
         "title": "Move Up",
         "icon": "$(arrow-up)"
       },
       {
-        "command": "codetour.nextTourStep",
+        "command": "vouch.nextTourStep",
         "title": "Next",
         "icon": "$(arrow-right)"
       },
       {
-        "command": "codetour.openTourFile",
+        "command": "vouch.openTourFile",
         "title": "Open Tour File...",
         "icon": "$(folder-opened)",
-        "category": "CodeTour"
+        "category": "Vouch"
       },
       {
-        "command": "codetour.openTourUrl",
+        "command": "vouch.openTourUrl",
         "title": "Open Tour URL...",
-        "category": "CodeTour"
+        "category": "Vouch"
       },
       {
-        "command": "codetour.previewTour",
+        "command": "vouch.previewTour",
         "title": "Preview Tour",
         "icon": "$(preview)"
       },
       {
-        "command": "codetour.previousTourStep",
+        "command": "vouch.previousTourStep",
         "title": "Previous",
         "icon": "$(arrow-left)"
       },
       {
-        "command": "codetour.recordTour",
+        "command": "vouch.recordTour",
         "title": "Record Tour",
-        "category": "CodeTour",
+        "category": "Vouch",
         "icon": "$(add)"
       },
       {
-        "command": "codetour.resumeTour",
+        "command": "vouch.resumeTour",
         "title": "Resume Tour",
-        "category": "CodeTour"
+        "category": "Vouch"
       },
       {
-        "command": "codetour.saveTourStep",
+        "command": "vouch.saveTourStep",
         "title": "Save Step",
         "enablement": "!commentIsEmpty"
       },
       {
-        "command": "codetour.showMarkers",
+        "command": "vouch.showMarkers",
         "title": "Show Tour Markers",
-        "category": "CodeTour",
+        "category": "Vouch",
         "icon": "$(eye)"
       },
       {
-        "command": "codetour.startTour",
+        "command": "vouch.startTour",
         "title": "Start Tour",
-        "category": "CodeTour",
+        "category": "Vouch",
         "icon": "$(debug-start)"
       },
       {
-        "command": "codetour.unmakeTourPrimary",
+        "command": "vouch.unmakeTourPrimary",
         "title": "Unmake Primary"
       },
       {
-        "command": "codetour.viewNotebook",
+        "command": "vouch.viewNotebook",
         "title": "View Notebook",
-        "category": "CodeTour"
+        "category": "Vouch"
       }
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "codetour.addContentStep",
-          "when": "codetour:inTour && codetour:recording && codetour:canEditTour"
+          "command": "vouch.addContentStep",
+          "when": "vouch:inTour && vouch:recording && vouch:canEditTour"
         },
         {
-          "command": "codetour.editTour",
-          "when": "codetour:inTour && !codetour:recording && codetour:canEditTour"
+          "command": "vouch.editTour",
+          "when": "vouch:inTour && !vouch:recording && vouch:canEditTour"
         },
         {
-          "command": "codetour.endTour",
-          "when": "codetour:inTour"
+          "command": "vouch.endTour",
+          "when": "vouch:inTour"
         },
         {
-          "command": "codetour.previewTour",
-          "when": "codetour:inTour && codetour:recording"
+          "command": "vouch.previewTour",
+          "when": "vouch:inTour && vouch:recording"
         },
         {
-          "command": "codetour.recordTour",
+          "command": "vouch.recordTour",
           "when": "workspaceFolderCount != 0"
         },
         {
-          "command": "codetour.resetProgress",
-          "when": "codetour:hasProgress"
+          "command": "vouch.resetProgress",
+          "when": "vouch:hasProgress"
         },
         {
-          "command": "codetour.resumeTour",
-          "when": "codetour:inTour"
+          "command": "vouch.resumeTour",
+          "when": "vouch:inTour"
         },
         {
-          "command": "codetour.startTour",
-          "when": "codetour:hasTours"
+          "command": "vouch.startTour",
+          "when": "vouch:hasTours"
         },
         {
-          "command": "codetour.addDirectoryStep",
+          "command": "vouch.addDirectoryStep",
           "when": "false"
         },
         {
-          "command": "codetour.addSelectionStep",
+          "command": "vouch.addSelectionStep",
           "when": "false"
         },
         {
-          "command": "codetour.addTourStep",
+          "command": "vouch.addTourStep",
           "when": "false"
         },
         {
-          "command": "codetour.changeTourRef",
+          "command": "vouch.changeTourRef",
           "when": "false"
         },
         {
-          "command": "codetour.changeTourStepLine",
+          "command": "vouch.changeTourStepLine",
           "when": "false"
         },
         {
-          "command": "codetour.changeTourStepTitle",
+          "command": "vouch.changeTourStepTitle",
           "when": "false"
         },
         {
-          "command": "codetour.changeTourTitle",
+          "command": "vouch.changeTourTitle",
           "when": "false"
         },
         {
-          "command": "codetour.changeTourDescription",
+          "command": "vouch.changeTourDescription",
           "when": "false"
         },
         {
-          "command": "codetour.deleteTour",
+          "command": "vouch.deleteTour",
           "when": "false"
         },
         {
-          "command": "codetour.deleteTourStep",
+          "command": "vouch.deleteTourStep",
           "when": "false"
         },
         {
-          "command": "codetour.editTourAtStep",
+          "command": "vouch.editTourAtStep",
           "when": "false"
         },
         {
-          "command": "codetour.exportTour",
+          "command": "vouch.exportTour",
           "when": "false"
         },
         {
-          "command": "codetour.hideMarkers",
+          "command": "vouch.hideMarkers",
           "when": "false"
         },
         {
-          "command": "codetour.makeTourPrimary",
+          "command": "vouch.makeTourPrimary",
           "when": "false"
         },
         {
-          "command": "codetour.nextTourStep",
+          "command": "vouch.nextTourStep",
           "when": "false"
         },
         {
-          "command": "codetour.previewTour",
+          "command": "vouch.previewTour",
           "when": "false"
         },
         {
-          "command": "codetour.previousTourStep",
+          "command": "vouch.previousTourStep",
           "when": "false"
         },
         {
-          "command": "codetour.resetTourProgress",
+          "command": "vouch.resetTourProgress",
           "when": "false"
         },
         {
-          "command": "codetour.saveTourStep",
+          "command": "vouch.saveTourStep",
           "when": "false"
         },
         {
-          "command": "codetour.showMarkers",
+          "command": "vouch.showMarkers",
           "when": "false"
         },
         {
-          "command": "codetour.unmakeTourPrimary",
+          "command": "vouch.unmakeTourPrimary",
           "when": "false"
         },
         {
-          "command": "codetour.viewNotebook",
+          "command": "vouch.viewNotebook",
           "when": "false"
         }
       ],
       "comments/commentThread/title": [
         {
-          "command": "codetour.previousTourStep",
+          "command": "vouch.previousTourStep",
           "group": "inline@1",
-          "when": "commentController == codetour && commentThread =~ /hasPrevious/"
+          "when": "commentController == vouch && commentThread =~ /hasPrevious/"
         },
         {
-          "command": "codetour.nextTourStep",
+          "command": "vouch.nextTourStep",
           "group": "inline@2",
-          "when": "commentController == codetour && commentThread =~ /hasNext/"
+          "when": "commentController == vouch && commentThread =~ /hasNext/"
         },
         {
-          "command": "codetour.endTour",
+          "command": "vouch.endTour",
           "group": "inline@3",
-          "when": "commentController == codetour"
+          "when": "commentController == vouch"
         },
         {
-          "command": "codetour.editTour",
+          "command": "vouch.editTour",
           "group": "inline@4",
-          "when": "commentController == codetour && !codetour:recording && codetour:canEditTour"
+          "when": "commentController == vouch && !vouch:recording && vouch:canEditTour"
         },
         {
-          "command": "codetour.previewTour",
+          "command": "vouch.previewTour",
           "group": "inline@4",
-          "when": "commentController == codetour && codetour:recording && !commentThreadIsEmpty"
+          "when": "commentController == vouch && vouch:recording && !commentThreadIsEmpty"
         }
       ],
       "comments/commentThread/context": [
         {
-          "command": "codetour.addTourStep",
+          "command": "vouch.addTourStep",
           "group": "inline",
-          "when": "commentController == codetour && commentThreadIsEmpty"
+          "when": "commentController == vouch && commentThreadIsEmpty"
         }
       ],
       "comments/comment/title": [
         {
-          "command": "codetour.moveTourStepBack",
+          "command": "vouch.moveTourStepBack",
           "group": "move@1",
-          "when": "commentController == codetour && codetour:canEditTour && commentThread =~ /hasPrevious/"
+          "when": "commentController == vouch && vouch:canEditTour && commentThread =~ /hasPrevious/"
         },
         {
-          "command": "codetour.moveTourStepForward",
+          "command": "vouch.moveTourStepForward",
           "group": "move@2",
-          "when": "commentController == codetour && codetour:canEditTour && commentThread =~ /hasNext/"
+          "when": "commentController == vouch && vouch:canEditTour && commentThread =~ /hasNext/"
         },
         {
-          "command": "codetour.changeTourStepLine",
+          "command": "vouch.changeTourStepLine",
           "group": "mutate@1",
-          "when": "commentController == codetour && codetour:canEditTour"
+          "when": "commentController == vouch && vouch:canEditTour"
         },
         {
-          "command": "codetour.deleteTourStep",
+          "command": "vouch.deleteTourStep",
           "group": "mutate@2",
-          "when": "commentController == codetour && codetour:canEditTour"
+          "when": "commentController == vouch && vouch:canEditTour"
         }
       ],
       "comments/comment/context": [
         {
-          "command": "codetour.saveTourStep",
+          "command": "vouch.saveTourStep",
           "group": "inline@2",
-          "when": "commentController == codetour && codetour:recording"
+          "when": "commentController == vouch && vouch:recording"
         }
       ],
       "view/title": [
         {
-          "command": "codetour.hideMarkers",
-          "when": "view == codetour.tours && codetour:showingMarkers",
+          "command": "vouch.hideMarkers",
+          "when": "view == vouch.tours && vouch:showingMarkers",
           "group": "navigation@1"
         },
         {
-          "command": "codetour.showMarkers",
-          "when": "view == codetour.tours && !codetour:showingMarkers",
+          "command": "vouch.showMarkers",
+          "when": "view == vouch.tours && !vouch:showingMarkers",
           "group": "navigation@1"
         },
         {
-          "command": "codetour.openTourFile",
-          "when": "view == codetour.tours",
+          "command": "vouch.openTourFile",
+          "when": "view == vouch.tours",
           "group": "navigation@2"
         },
         {
-          "command": "codetour.recordTour",
-          "when": "view == codetour.tours",
+          "command": "vouch.recordTour",
+          "when": "view == vouch.tours",
           "group": "navigation@3"
         }
       ],
       "view/item/context": [
         {
-          "command": "codetour.endTour",
-          "when": "viewItem =~ /^codetour.tour(.recording)?.active/",
+          "command": "vouch.endTour",
+          "when": "viewItem =~ /^vouch.tour(.recording)?.active/",
           "group": "inline@1"
         },
         {
-          "command": "codetour.startTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?$/",
+          "command": "vouch.startTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?$/",
           "group": "inline@1"
         },
         {
-          "command": "codetour.resumeTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.recording)?.active$/",
+          "command": "vouch.resumeTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
           "group": "active@1"
         },
         {
-          "command": "codetour.endTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.recording)?.active$/",
+          "command": "vouch.endTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
           "group": "active@2"
         },
         {
-          "command": "codetour.startTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?$/",
+          "command": "vouch.startTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?$/",
           "group": "basic@1"
         },
         {
-          "command": "codetour.addContentStep",
-          "when": "viewItem =~ /^codetour.tour(.primary)?.recording/",
+          "command": "vouch.addContentStep",
+          "when": "viewItem =~ /^vouch.tour(.primary)?.recording/",
           "group": "basic@1"
         },
         {
-          "command": "codetour.resetTourProgress",
+          "command": "vouch.resetTourProgress",
           "when": "false",
           "group": "basic@2"
         },
         {
-          "command": "codetour.changeTourTitle",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.recording)?(.active)?$/",
+          "command": "vouch.changeTourTitle",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
           "group": "change@1"
         },
         {
-          "command": "codetour.changeTourDescription",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.recording)?(.active)?$/",
+          "command": "vouch.changeTourDescription",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
           "group": "change@2"
         },
         {
-          "command": "codetour.changeTourRef",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.recording)?(.active)?$/ && gitOpenRepositoryCount != 0",
+          "command": "vouch.changeTourRef",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/ && gitOpenRepositoryCount != 0",
           "group": "change@3"
         },
         {
-          "command": "codetour.makeTourPrimary",
-          "when": "viewItem =~ /^codetour.tour(.recording)?(.active)?$/",
+          "command": "vouch.makeTourPrimary",
+          "when": "viewItem =~ /^vouch.tour(.recording)?(.active)?$/",
           "group": "edit@1"
         },
         {
-          "command": "codetour.unmakeTourPrimary",
-          "when": "viewItem =~ /^codetour.tour.primary(.recording)?(.active)?$/",
+          "command": "vouch.unmakeTourPrimary",
+          "when": "viewItem =~ /^vouch.tour.primary(.recording)?(.active)?$/",
           "group": "edit@2"
         },
         {
-          "command": "codetour.editTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.active)?$/",
+          "command": "vouch.editTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.active)?$/",
           "group": "edit@2"
         },
         {
-          "command": "codetour.previewTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?.recording/",
+          "command": "vouch.previewTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?.recording/",
           "group": "edit@2"
         },
         {
-          "command": "codetour.deleteTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.recording)?(.active)?$/",
+          "command": "vouch.deleteTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
           "group": "edit@3"
         },
         {
-          "command": "codetour.exportTour",
-          "when": "viewItem =~ /^codetour.tour(.primary)?(.active)?$/",
+          "command": "vouch.exportTour",
+          "when": "viewItem =~ /^vouch.tour(.primary)?(.active)?$/",
           "group": "export@1"
         },
         {
-          "command": "codetour.moveTourStepBack",
-          "when": "viewItem =~ /^codetour.tourStep.hasPrevious/",
+          "command": "vouch.moveTourStepBack",
+          "when": "viewItem =~ /^vouch.tourStep.hasPrevious/",
           "group": "inline@1"
         },
         {
-          "command": "codetour.moveTourStepForward",
-          "when": "viewItem =~ /codetour.tourStep.*(.hasNext)/",
+          "command": "vouch.moveTourStepForward",
+          "when": "viewItem =~ /vouch.tourStep.*(.hasNext)/",
           "group": "inline@2"
         },
         {
-          "command": "codetour.moveTourStepBack",
-          "when": "viewItem =~ /^codetour.tourStep.hasPrevious/",
+          "command": "vouch.moveTourStepBack",
+          "when": "viewItem =~ /^vouch.tourStep.hasPrevious/",
           "group": "basic@1"
         },
         {
-          "command": "codetour.moveTourStepForward",
-          "when": "viewItem =~ /codetour.tourStep.*(.hasNext)/",
+          "command": "vouch.moveTourStepForward",
+          "when": "viewItem =~ /vouch.tourStep.*(.hasNext)/",
           "group": "basic@2"
         },
         {
-          "command": "codetour.changeTourStepTitle",
-          "when": "viewItem =~ /^codetour.tourStep/",
+          "command": "vouch.changeTourStepTitle",
+          "when": "viewItem =~ /^vouch.tourStep/",
           "group": "change@1"
         },
         {
-          "command": "codetour.editTourAtStep",
-          "when": "viewItem =~ /^codetour.tourStep/ && !codetour:recording",
+          "command": "vouch.editTourAtStep",
+          "when": "viewItem =~ /^vouch.tourStep/ && !vouch:recording",
           "group": "manage@1"
         },
         {
-          "command": "codetour.deleteTourStep",
-          "when": "viewItem =~ /^codetour.tourStep/",
+          "command": "vouch.deleteTourStep",
+          "when": "viewItem =~ /^vouch.tourStep/",
           "group": "manage@2"
         }
       ],
       "explorer/context": [
         {
-          "command": "codetour.addDirectoryStep",
-          "when": "codetour:recording && explorerResourceIsFolder"
+          "command": "vouch.addDirectoryStep",
+          "when": "vouch:recording && explorerResourceIsFolder"
         }
       ],
       "editor/context": [
         {
-          "command": "codetour.addSelectionStep",
-          "when": "codetour:recording && editorHasSelection",
-          "group": "codetour@1"
+          "command": "vouch.addSelectionStep",
+          "when": "vouch:recording && editorHasSelection",
+          "group": "vouch@1"
         }
       ]
     },
     "views": {
       "explorer": [
         {
-          "id": "codetour.tours",
-          "name": "CodeTour",
-          "when": "workspaceFolderCount != 0 || codetour:inTour"
+          "id": "vouch.tours",
+          "name": "Vouch",
+          "when": "workspaceFolderCount != 0 || vouch:inTour"
         }
       ]
     },
     "viewsWelcome": [
       {
-        "view": "codetour.tours",
-        "contents": "In order to create a guided walkthrough, you can begin recording a tour for the currently opened workspace ([Learn More](https://github.com/vsls-contrib/codetour#recording-tours)).\n\n[Record Tour](command:codetour.recordTour)\n\nYou can also open tours that were shared with you by others ([Learn More](https://github.com/vsls-contrib/codetour#opening-tours)).\n\n[Open Tour File](command:codetour.openTourFile)\n\n[Open Tour URL](command:codetour.openTourUrl)"
+        "view": "vouch.tours",
+        "contents": "Start a review of the files found in the currently opened workspace by clicking on the button below ([Learn More](https://github.com/vsls-contrib/vouch#recording-tours)).\n\n[Start Review](command:vouch.recordTour)\n\nYou can also open reviews that were shared by others ([Learn More](https://github.com/vouch-dev/vouch)).\n\n[Open Review File](command:vouch.openTourFile)"
       }
     ],
     "jsonValidation": [
       {
         "fileMatch": "*.tour",
-        "url": "https://aka.ms/codetour-schema"
+        "url": "https://aka.ms/vouch-schema"
       }
     ],
     "keybindings": [
       {
-        "command": "codetour.previousTourStep",
-        "when": "codetour:inTour && !textInputFocus && !terminalFocus",
+        "command": "vouch.previousTourStep",
+        "when": "vouch:inTour && !textInputFocus && !terminalFocus",
         "key": "ctrl+left",
         "mac": "cmd+left"
       },
       {
-        "command": "codetour.nextTourStep",
-        "when": "codetour:inTour && !textInputFocus && !terminalFocus",
+        "command": "vouch.nextTourStep",
+        "when": "vouch:inTour && !textInputFocus && !terminalFocus",
         "key": "ctrl+right",
         "mac": "cmd+right"
       }
@@ -592,7 +592,7 @@
     ]
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "mobx": "^5.14.2",
     "vsls": "^1.0.2532"
   },

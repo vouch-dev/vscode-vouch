@@ -9,11 +9,11 @@ import {
   Uri
 } from "vscode";
 import { CONTENT_URI, EXTENSION_NAME, FS_SCHEME } from "../constants";
-import { CodeTour, store } from "../store";
+import { store, Vouch } from "../store";
 import { progress } from "../store/storage";
 import { getFileUri, getStepLabel, getWorkspaceUri } from "../utils";
 
-function isRecording(tour: CodeTour) {
+function isRecording(tour: Vouch) {
   return (
     store.isRecording &&
     store.activeTour &&
@@ -28,7 +28,7 @@ const completeIcon = new ThemeIcon(
 );
 
 export class CodeTourNode extends TreeItem {
-  constructor(public tour: CodeTour, extensionPath: string) {
+  constructor(public tour: Vouch, extensionPath: string) {
     super(
       tour.title!,
       isRecording(tour)
@@ -39,7 +39,7 @@ export class CodeTourNode extends TreeItem {
     this.tooltip = tour.description;
     this.description = `${tour.steps.length} steps`;
 
-    const contextValues = ["codetour.tour"];
+    const contextValues = ["vouch.tour"];
 
     if (tour.isPrimary) {
       contextValues.push("primary");
@@ -60,15 +60,15 @@ export class CodeTourNode extends TreeItem {
     this.iconPath = isRecording(tour)
       ? new ThemeIcon("record")
       : isActive
-      ? new ThemeIcon("play-circle")
-      : progress.isComplete(tour)
-      ? completeIcon
-      : new ThemeIcon("location");
+        ? new ThemeIcon("play-circle")
+        : progress.isComplete(tour)
+          ? completeIcon
+          : new ThemeIcon("location");
   }
 }
 
 export class CodeTourStepNode extends TreeItem {
-  constructor(public tour: CodeTour, public stepNumber: number) {
+  constructor(public tour: Vouch, public stepNumber: number) {
     super(getStepLabel(tour, stepNumber));
 
     const step = tour.steps[stepNumber];
@@ -118,7 +118,7 @@ export class CodeTourStepNode extends TreeItem {
       this.iconPath = ThemeIcon.File;
     }
 
-    const contextValues = ["codetour.tourStep"];
+    const contextValues = ["vouch.tourStep"];
     if (stepNumber > 0) {
       contextValues.push("hasPrevious");
     }

@@ -35,14 +35,14 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
         ]),
         store.activeTour
           ? [
-              store.activeTour.tour.title,
-              store.activeTour.tour.description,
-              store.activeTour.tour.steps.map(step => [
-                step.title,
-                step.markerTitle,
-                step.description
-              ])
-            ]
+            store.activeTour.tour.title,
+            store.activeTour.tour.description,
+            store.activeTour.tour.steps.map(step => [
+              step.title,
+              step.markerTitle,
+              step.description
+            ])
+          ]
           : null
       ],
       () => {
@@ -80,7 +80,7 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
         if (store.isRecording && store.activeTour?.tour.id == element.tour.id) {
           item = new TreeItem("Add tour step...");
           item.command = {
-            command: "codetour.addContentStep",
+            command: "vouch.addContentStep",
             title: "Add tour step..."
           };
         } else {
@@ -155,10 +155,10 @@ export function registerTreeProvider(extensionPath: string) {
     () => [
       store.activeTour
         ? [
-            store.activeTour.tour.title,
-            store.activeTour.tour.steps.map(step => [step.title]),
-            store.activeTour.step
-          ]
+          store.activeTour.tour.title,
+          store.activeTour.tour.steps.map(step => [step.title]),
+          store.activeTour.step
+        ]
         : null
     ],
     () => {

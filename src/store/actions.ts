@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { commands, EventEmitter, Memento, Uri, window } from "vscode";
-import { CodeTour, store } from ".";
+import { store, Vouch } from ".";
 import { EXTENSION_NAME, FS_SCHEME, FS_SCHEME_CONTENT } from "../constants";
 import { startPlayer, stopPlayer } from "../player";
 import {
@@ -17,19 +17,19 @@ const CAN_EDIT_TOUR_KEY = `${EXTENSION_NAME}:canEditTour`;
 const IN_TOUR_KEY = `${EXTENSION_NAME}:inTour`;
 const RECORDING_KEY = `${EXTENSION_NAME}:recording`;
 
-const _onDidEndTour = new EventEmitter<CodeTour>();
+const _onDidEndTour = new EventEmitter<Vouch>();
 export const onDidEndTour = _onDidEndTour.event;
 
-const _onDidStartTour = new EventEmitter<[CodeTour, number]>();
+const _onDidStartTour = new EventEmitter<[Vouch, number]>();
 export const onDidStartTour = _onDidStartTour.event;
 
 export function startCodeTour(
-  tour: CodeTour,
+  tour: Vouch,
   stepNumber?: number,
   workspaceRoot?: Uri,
   startInEditMode: boolean = false,
   canEditTour: boolean = true,
-  tours?: CodeTour[]
+  tours?: Vouch[]
 ) {
   startPlayer();
 
@@ -58,7 +58,7 @@ export function startCodeTour(
 }
 
 export async function selectTour(
-  tours: CodeTour[],
+  tours: Vouch[],
   workspaceRoot?: Uri
 ): Promise<boolean> {
   const items: any[] = tours.map(tour => ({
@@ -133,7 +133,7 @@ function isLiveShareWorkspace(uri: Uri) {
 export async function promptForTour(
   globalState: Memento,
   workspaceRoot: Uri = getWorkspaceKey(),
-  tours: CodeTour[] = store.tours
+  tours: Vouch[] = store.tours
 ): Promise<boolean> {
   const key = `${EXTENSION_NAME}:${workspaceRoot}`;
   if (
@@ -146,7 +146,7 @@ export async function promptForTour(
     if (
       await window.showInformationMessage(
         "This workspace has guided tours you can take to get familiar with the codebase.",
-        "Start CodeTour"
+        "Start Vouch"
       )
     ) {
       const primaryTour =
@@ -165,7 +165,7 @@ export async function promptForTour(
   return false;
 }
 
-export async function exportTour(tour: CodeTour) {
+export async function exportTour(tour: Vouch) {
   const newTour = {
     ...tour
   };

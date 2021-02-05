@@ -21,7 +21,7 @@ import {
   workspace
 } from "vscode";
 import { SMALL_ICON_URL } from "../constants";
-import { CodeTour, store } from "../store";
+import { store, Vouch } from "../store";
 import {
   getActiveStepMarker,
   getActiveTourNumber,
@@ -31,8 +31,8 @@ import {
   getTourTitle
 } from "../utils";
 
-const CONTROLLER_ID = "codetour";
-const CONTROLLER_LABEL = "CodeTour";
+const CONTROLLER_ID = "vouch";
+const CONTROLLER_LABEL = "Vouch";
 
 let id = 0;
 
@@ -45,7 +45,7 @@ export function generatePreviewContent(content: string) {
   return content
     .replace(SHELL_SCRIPT_PATTERN, (_, script) => {
       const args = encodeURIComponent(JSON.stringify([script]));
-      return `> [${script}](command:codetour.sendTextToTerminal?${args} "Run \\"${script}\\" in a terminal")`;
+      return `> [${script}](command:vouch.sendTextToTerminal?${args} "Run \\"${script}\\" in a terminal")`;
     })
     .replace(COMMAND_PATTERN, (_, commandPrefix, params) => {
       const args = encodeURIComponent(JSON.stringify(JSON.parse(params)));
@@ -54,7 +54,7 @@ export function generatePreviewContent(content: string) {
     .replace(TOUR_REFERENCE_PATTERN, (_, linkTitle, tourTitle, stepNumber) => {
       if (!tourTitle) {
         const title = linkTitle || `#${stepNumber}`;
-        return `[${title}](command:codetour.navigateToStep?${stepNumber} "Navigate to step #${stepNumber}")`;
+        return `[${title}](command:vouch.navigateToStep?${stepNumber} "Navigate to step #${stepNumber}")`;
       }
 
       const tours = store.activeTour?.tours || store.tours;
@@ -67,7 +67,7 @@ export function generatePreviewContent(content: string) {
         }
         const argsContent = encodeURIComponent(JSON.stringify(args));
         const title = linkTitle || tour.title;
-        return `[${title}](command:codetour.startTourByTitle?${argsContent} "Start \\"${tour.title}\\" tour")`;
+        return `[${title}](command:vouch.startTourByTitle?${argsContent} "Start \\"${tour.title}\\" tour")`;
       }
 
       return _;
@@ -75,7 +75,7 @@ export function generatePreviewContent(content: string) {
     .replace(CODE_FENCE_PATTERN, (_, codeBlock) => {
       const params = encodeURIComponent(JSON.stringify([codeBlock]));
       return `${_}
-↪ [Insert Code](command:codetour.insertCodeSnippet?${params} "Insert Code")`;
+↪ [Insert Code](command:vouch.insertCodeSnippet?${params} "Insert Code")`;
     });
 }
 
@@ -163,7 +163,7 @@ const VIEW_COMMANDS = new Map([
   ["terminal", "workbench.panel.terminal"]
 ]);
 
-function getPreviousTour(): CodeTour | undefined {
+function getPreviousTour(): Vouch | undefined {
   const previousTour = store.tours.find(
     tour => tour.nextTour === store.activeTour?.tour.title
   );
@@ -181,7 +181,7 @@ function getPreviousTour(): CodeTour | undefined {
   }
 }
 
-function getNextTour(): CodeTour | undefined {
+function getNextTour(): Vouch | undefined {
   if (store.activeTour?.tour.nextTour) {
     return store.tours.find(
       tour => tour.title === store.activeTour?.tour.nextTour
@@ -216,8 +216,8 @@ async function renderCurrentStep() {
   let line = step.line
     ? step.line - 1
     : step.selection
-    ? step.selection.end.line - 1
-    : undefined;
+      ? step.selection.end.line - 1
+      : undefined;
 
   if (step.file && !line) {
     const stepPattern = step.pattern || getActiveStepMarker();
@@ -266,7 +266,7 @@ async function renderCurrentStep() {
         false
       );
       const suffix = stepLabel ? ` (${stepLabel})` : "";
-      content += `← [Previous${suffix}](command:codetour.previousTourStep "Navigate to previous step")`;
+      content += `← [Previous${suffix}](command:vouch.previousTourStep "Navigate to previous step")`;
     } else {
       const previousTour = getPreviousTour();
       if (previousTour) {
@@ -276,7 +276,7 @@ async function renderCurrentStep() {
         const argsContent = encodeURIComponent(
           JSON.stringify([previousTour.title])
         );
-        content += `← [Previous Tour (${tourTitle})](command:codetour.startTourByTitle?${argsContent} "Navigate to previous tour")`;
+        content += `← [Previous Tour (${tourTitle})](command:vouch.startTourByTitle?${argsContent} "Navigate to previous tour")`;
       }
     }
 
@@ -289,7 +289,7 @@ async function renderCurrentStep() {
         false
       );
       const suffix = stepLabel ? ` (${stepLabel})` : "";
-      content += `${prefix}[Next${suffix}](command:codetour.nextTourStep "Navigate to next step") →`;
+      content += `${prefix}[Next${suffix}](command:vouch.nextTourStep "Navigate to next step") →`;
     } else if (isFinalStep) {
       const nextTour = getNextTour();
       if (nextTour) {
@@ -297,9 +297,9 @@ async function renderCurrentStep() {
         const argsContent = encodeURIComponent(
           JSON.stringify([nextTour.title])
         );
-        content += `${prefix}[Next Tour (${tourTitle})](command:codetour.finishTour?${argsContent} "Start next tour")`;
+        content += `${prefix}[Next Tour (${tourTitle})](command:vouch.finishTour?${argsContent} "Start next tour")`;
       } else {
-        content += `${prefix}[Finish Tour](command:codetour.finishTour "Finish the tour")`;
+        content += `${prefix}[Finish Tour](command:vouch.finishTour "Finish the tour")`;
       }
     }
   }
@@ -406,16 +406,16 @@ reaction(
   () => [
     store.activeTour
       ? [
-          store.activeTour.step,
-          store.activeTour.tour.title,
-          store.activeTour.tour.steps.map(step => [
-            step.title,
-            step.description,
-            step.line,
-            step.directory,
-            step.view
-          ])
-        ]
+        store.activeTour.step,
+        store.activeTour.tour.title,
+        store.activeTour.tour.steps.map(step => [
+          step.title,
+          step.description,
+          step.line,
+          step.directory,
+          step.view
+        ])
+      ]
       : null
   ],
   () => {

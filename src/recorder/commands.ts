@@ -8,7 +8,7 @@ import { workspace } from "vscode";
 import { EXTENSION_NAME, FS_SCHEME_CONTENT } from "../constants";
 import { api, RefType } from "../git";
 import { CodeTourComment } from "../player";
-import { CodeTour, CodeTourStep, store } from "../store";
+import { CodeTourStep, store, Vouch } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -18,10 +18,10 @@ import {
 import { CodeTourNode, CodeTourStepNode } from "../tree/nodes";
 import { getActiveWorkspacePath, getRelativePath } from "../utils";
 
-export async function saveTour(tour: CodeTour) {
+export async function saveTour(tour: Vouch) {
   const uri = vscode.Uri.parse(tour.id);
   const newTour = {
-    $schema: "https://aka.ms/codetour-schema",
+    $schema: "https://aka.ms/vouch-schema",
     ...tour
   };
   delete newTour.id;
@@ -66,7 +66,7 @@ export function registerRecorderCommands() {
     workspaceRoot: vscode.Uri,
     title: string | vscode.Uri,
     ref?: string
-  ): Promise<CodeTour> {
+  ): Promise<Vouch> {
     const uri =
       typeof title === "string" ? getTourFileUri(workspaceRoot, title) : title;
 
@@ -87,7 +87,7 @@ export function registerRecorderCommands() {
     (tour as any).id = decodeURIComponent(uri.toString());
 
     // @ts-ignore
-    return tour as CodeTour;
+    return tour as Vouch;
   }
 
   interface WorkspaceQuickPickItem extends vscode.QuickPickItem {
@@ -152,7 +152,7 @@ export function registerRecorderCommands() {
     startCodeTour(tour, 0, workspaceRoot, true);
 
     vscode.window.showInformationMessage(
-      "CodeTour recording started! Begin creating steps by opening a file, clicking the + button to the left of a line of code, and then adding the appropriate comments."
+      "Vouch recording started! Begin creating steps by opening a file, clicking the + button to the left of a line of code, and then adding the appropriate comments."
     );
   }
 
@@ -382,7 +382,7 @@ export function registerRecorderCommands() {
       store.isRecording = true;
       await vscode.commands.executeCommand(
         "setContext",
-        "codetour:recording",
+        "vouch:recording",
         true
       );
 
@@ -413,7 +413,7 @@ export function registerRecorderCommands() {
       store.isRecording = false;
       await vscode.commands.executeCommand(
         "setContext",
-        "codetour:recording",
+        "vouch:recording",
         false
       );
 
@@ -481,7 +481,7 @@ export function registerRecorderCommands() {
     }
   );
 
-  async function updateTourProperty(tour: CodeTour, property: string) {
+  async function updateTourProperty(tour: Vouch, property: string) {
     const propertyValue = await vscode.window.showInputBox({
       prompt: `Enter the ${property} for this tour`,
       // @ts-ignore
@@ -503,7 +503,7 @@ export function registerRecorderCommands() {
     movement: number,
     node: CodeTourStepNode | CodeTourComment
   ) {
-    let tour: CodeTour, stepNumber: number;
+    let tour: Vouch, stepNumber: number;
 
     if (node instanceof CodeTourComment) {
       tour = store.activeTour!.tour;
@@ -604,8 +604,8 @@ export function registerRecorderCommands() {
     async (node: CodeTourNode) => {
       const workspaceRoot =
         store.activeTour &&
-        store.activeTour.tour.id === node.tour.id &&
-        store.activeTour.workspaceRoot
+          store.activeTour.tour.id === node.tour.id &&
+          store.activeTour.workspaceRoot
           ? store.activeTour.workspaceRoot
           : workspace.getWorkspaceFolder(vscode.Uri.parse(node.tour.id))?.uri;
 
@@ -665,7 +665,7 @@ export function registerRecorderCommands() {
       node: CodeTourStepNode | CodeTourComment,
       additionalNodes: CodeTourStepNode[]
     ) => {
-      let tour: CodeTour, steps: number[];
+      let tour: Vouch, steps: number[];
       let messageSuffix = "selected step";
       let buttonSuffix = "Step";
 
@@ -707,7 +707,7 @@ export function registerRecorderCommands() {
           }
 
           if (steps.includes(store.activeTour.step)) {
-            // The only reason that a CodeTour content editor would be
+            // The only reason that a Vouch content editor would be
             // open is because it was associated with the current step.
             // So detect if there are any, and if so, hide them.
             vscode.window.visibleTextEditors.forEach(editor => {

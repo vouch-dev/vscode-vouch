@@ -3,17 +3,17 @@
 
 import { observable } from "mobx";
 import { commands, ExtensionContext, Uri, workspace } from "vscode";
-import { CodeTour, store } from ".";
+import { store, Vouch } from ".";
 
-const CODETOUR_PROGRESS_KEY = "codetour:progress";
+const CODETOUR_PROGRESS_KEY = "vouch:progress";
 
 export var progress: {
   update(): void;
-  isComplete(tour: CodeTour, stepNumber?: number): boolean;
+  isComplete(tour: Vouch, stepNumber?: number): boolean;
   reset(): void;
 };
 
-function getProgress(tour: CodeTour) {
+function getProgress(tour: Vouch) {
   const progress = store.progress.find(([id]) => tour.id === id);
   return progress?.[1] || observable([]);
 }
@@ -36,10 +36,10 @@ export function initializeStorage(context: ExtensionContext) {
         ]);
       }
 
-      commands.executeCommand("setContext", "codetour:hasProgress", true);
+      commands.executeCommand("setContext", "vouch:hasProgress", true);
       return context.globalState.update(CODETOUR_PROGRESS_KEY, store.progress);
     },
-    isComplete(tour: CodeTour, stepNumber?: number): boolean {
+    isComplete(tour: Vouch, stepNumber?: number): boolean {
       const tourProgress = getProgress(tour);
       if (stepNumber !== undefined) {
         return tourProgress.includes(stepNumber);
@@ -47,8 +47,8 @@ export function initializeStorage(context: ExtensionContext) {
         return tourProgress.length >= tour.steps.length;
       }
     },
-    async reset(tour?: CodeTour) {
-      commands.executeCommand("setContext", "codetour:hasProgress", false);
+    async reset(tour?: Vouch) {
+      commands.executeCommand("setContext", "vouch:hasProgress", false);
 
       store.progress = tour
         ? store.progress.filter(tourProgress => tourProgress[0] !== tour.id)
@@ -65,6 +65,6 @@ export function initializeStorage(context: ExtensionContext) {
   );
 
   if (workspaceHasProgress) {
-    commands.executeCommand("setContext", "codetour:hasProgress", true);
+    commands.executeCommand("setContext", "vouch:hasProgress", true);
   }
 }
