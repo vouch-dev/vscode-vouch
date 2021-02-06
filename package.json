@@ -122,7 +122,7 @@
       },
       {
         "command": "vouch.exportTour",
-        "title": "Export Tour..."
+        "title": "Export Review"
       },
       {
         "command": "vouch.hideMarkers",

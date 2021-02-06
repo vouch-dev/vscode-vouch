@@ -196,7 +196,7 @@ export function registerPlayerCommands() {
     async () => {
       const uri = await vscode.window.showOpenDialog({
         filters: {
-          Tours: ["review"]
+          Reviews: ["review"]
         },
         canSelectFolders: false,
         canSelectMany: false,
@@ -250,9 +250,9 @@ export function registerPlayerCommands() {
     async (node: CodeTourNode) => {
       const uri = await vscode.window.showSaveDialog({
         filters: {
-          Tours: ["tour"]
+          Reviews: ["review"]
         },
-        saveLabel: "Export Tour"
+        saveLabel: "Export Review"
       });
 
       if (!uri) {

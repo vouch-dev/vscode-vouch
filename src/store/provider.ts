@@ -123,7 +123,7 @@ async function discoverToursAndUpdateTitles() {
 vscode.workspace.onDidChangeWorkspaceFolders(discoverToursAndUpdateTitles);
 
 const watcher = vscode.workspace.createFileSystemWatcher(
-  "**/{.vscode/tours,.vouch_reviews}/**/*.{json,tour}"
+  "**/{.vscode/tours,.vouch_reviews}/**/*.{json,review}"
 );
 
 watcher.onDidChange(discoverToursAndUpdateTitles);

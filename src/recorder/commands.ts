@@ -161,7 +161,7 @@ export function registerRecorderCommands() {
     async (workspaceRoot?: vscode.Uri, placeHolderTitle?: string) => {
       const inputBox = vscode.window.createInputBox();
       inputBox.title =
-        "Specify the title of the tour, or save it to a specific location";
+        "Specify the title of the review, or save it to a specific location";
       inputBox.placeholder = placeHolderTitle;
       inputBox.buttons = [
         {
@@ -185,9 +185,9 @@ export function registerRecorderCommands() {
 
         const uri = await vscode.window.showSaveDialog({
           filters: {
-            Tours: ["tour"]
+            Reviews: ["review"]
           },
-          saveLabel: "Save Tour"
+          saveLabel: "Save Review"
         });
 
         if (!uri) {
@@ -200,8 +200,8 @@ export function registerRecorderCommands() {
 
             if (
               await vscode.window.showInformationMessage(
-                "Would you like to export this tour?",
-                "Export Tour"
+                "Would you like to export this review?",
+                "Export Review"
               )
             ) {
               const content = await exportTour(tour);
