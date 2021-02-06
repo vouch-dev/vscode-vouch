@@ -353,7 +353,7 @@ export function registerRecorderCommands() {
 
       saveTour(tour);
 
-      let label = `Step #${stepNumber + 1} of ${tour.steps.length}`;
+      let label = `Comment #${stepNumber + 1} of ${tour.steps.length}`;
 
       const contextValues = [];
       if (tour.steps.length > 1) {

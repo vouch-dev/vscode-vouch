@@ -238,7 +238,7 @@ async function renderCurrentStep() {
   }
 
   const range = new Range(line!, 0, line!, 0);
-  let label = `Step #${currentStep + 1} of ${currentTour!.steps.length}`;
+  let label = `Comment #${currentStep + 1} of ${currentTour!.steps.length}`;
 
   if (currentTour.title) {
     const title = getTourTitle(currentTour);

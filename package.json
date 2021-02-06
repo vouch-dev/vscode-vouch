@@ -56,11 +56,11 @@
       },
       {
         "command": "vouch.addDirectoryStep",
-        "title": "Add Vouch Step"
+        "title": "Add Review Comment"
       },
       {
         "command": "vouch.addSelectionStep",
-        "title": "Add Vouch Step"
+        "title": "Add Review Comment"
       },
       {
         "command": "vouch.addTourStep",
