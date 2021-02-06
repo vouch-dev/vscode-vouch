@@ -152,7 +152,7 @@ export function registerRecorderCommands() {
     startCodeTour(tour, 0, workspaceRoot, true);
 
     vscode.window.showInformationMessage(
-      "Vouch recording started! Begin creating steps by opening a file, clicking the + button to the left of a line of code, and then adding the appropriate comments."
+      "Review recording started! Begin adding comments by opening a file and clicking the + button to the left of a line of code."
     );
   }
 
