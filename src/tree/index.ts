@@ -84,7 +84,7 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
             title: "Add tour step..."
           };
         } else {
-          item = new TreeItem("No steps recorded");
+          item = new TreeItem("No comments added");
         }
 
         return [item];

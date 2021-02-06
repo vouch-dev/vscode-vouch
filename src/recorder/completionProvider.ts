@@ -43,7 +43,7 @@ const COMMANDS = [
       .appendText('"]')
   },
   {
-    label: "Start tour",
+    label: "Step Through Review",
     detail: 'Starts another tour using it\'s title (e.g. "Status Bar")',
     insertText: new vscode.SnippetString('vouch.startTourByTitle?["')
       .appendPlaceholder("tourTitle")

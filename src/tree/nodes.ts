@@ -81,7 +81,7 @@ export class CodeTourStepNode extends TreeItem {
 
     this.command = {
       command: `${EXTENSION_NAME}.startTour`,
-      title: "Start Tour",
+      title: "Step Through Review",
       arguments: [tour, stepNumber, workspaceRoot, tours]
     };
 

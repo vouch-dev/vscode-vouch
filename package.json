@@ -194,7 +194,7 @@
       },
       {
         "command": "vouch.startTour",
-        "title": "Start Tour",
+        "title": "Step Through Review",
         "category": "Vouch",
         "icon": "$(debug-start)"
       },

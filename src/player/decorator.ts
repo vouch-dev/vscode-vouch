@@ -80,7 +80,7 @@ function registerHoverProvider() {
         const args = encodeURIComponent(JSON.stringify([tour.id, stepNumber]));
         const command = `command:vouch._startTourById?${args}`;
         return `Vouch: ${tour.title} (Comment #${stepNumber + 1
-          }) &nbsp;[Start Tour](${command} "Start Tour")\n`;
+          }) &nbsp;[Step Through Review](${command} "Step Through Review")\n`;
       });
 
       const content = new vscode.MarkdownString(hovers.join("\n"));
