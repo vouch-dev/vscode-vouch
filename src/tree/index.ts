@@ -78,10 +78,10 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
         let item;
 
         if (store.isRecording && store.activeTour?.tour.id == element.tour.id) {
-          item = new TreeItem("Add tour step...");
+          item = new TreeItem("Add review comment...");
           item.command = {
             command: "vouch.addContentStep",
-            title: "Add tour step..."
+            title: "Add review comment..."
           };
         } else {
           item = new TreeItem("No comments added");

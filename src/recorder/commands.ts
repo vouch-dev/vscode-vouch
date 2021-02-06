@@ -632,12 +632,12 @@ export function registerRecorderCommands() {
     `${EXTENSION_NAME}.deleteTour`,
     async (node: CodeTourNode, additionalNodes: CodeTourNode[]) => {
       const messageSuffix = additionalNodes
-        ? `${additionalNodes.length} selected tours`
-        : `"${node.tour.title}" tour`;
+        ? `${additionalNodes.length} selected reviews`
+        : `"${node.tour.title}" review`;
 
       const buttonSuffix = additionalNodes
-        ? `${additionalNodes.length} Tours`
-        : "Tour";
+        ? `${additionalNodes.length} Reviews`
+        : "Review";
 
       if (
         await vscode.window.showInformationMessage(
@@ -666,15 +666,15 @@ export function registerRecorderCommands() {
       additionalNodes: CodeTourStepNode[]
     ) => {
       let tour: Vouch, steps: number[];
-      let messageSuffix = "selected step";
-      let buttonSuffix = "Step";
+      let messageSuffix = "selected comment";
+      let buttonSuffix = "Comment";
 
       if (node instanceof CodeTourStepNode) {
         tour = node.tour;
 
         if (additionalNodes) {
-          buttonSuffix = `${additionalNodes.length} Steps`;
-          messageSuffix = `${additionalNodes.length} selected steps`;
+          buttonSuffix = `${additionalNodes.length} Comments`;
+          messageSuffix = `${additionalNodes.length} selected comments`;
 
           steps = additionalNodes.map(n => n.stepNumber);
         } else {
