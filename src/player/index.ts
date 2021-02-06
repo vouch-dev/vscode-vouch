@@ -299,7 +299,7 @@ async function renderCurrentStep() {
         );
         content += `${prefix}[Next Tour (${tourTitle})](command:vouch.finishTour?${argsContent} "Start next tour")`;
       } else {
-        content += `${prefix}[Finish Tour](command:vouch.finishTour "Finish the tour")`;
+        content += `${prefix}[Finish Review](command:vouch.finishTour "Finish the review")`;
       }
     }
   }

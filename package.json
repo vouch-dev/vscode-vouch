@@ -51,7 +51,7 @@
     "commands": [
       {
         "command": "vouch.addContentStep",
-        "title": "Add Tour Step",
+        "title": "Add Review Comment",
         "category": "Vouch"
       },
       {
@@ -64,7 +64,7 @@
       },
       {
         "command": "vouch.addTourStep",
-        "title": "Add Step to Tour",
+        "title": "Add Comment to Review",
         "enablement": "!commentIsEmpty"
       },
       {
@@ -98,25 +98,25 @@
       },
       {
         "command": "vouch.deleteTourStep",
-        "title": "Delete Step"
+        "title": "Delete Comment"
       },
       {
         "command": "vouch.deleteTour",
-        "title": "Delete Tour"
+        "title": "Delete Review"
       },
       {
         "command": "vouch.editTourAtStep",
-        "title": "Edit Step"
+        "title": "Edit Comment"
       },
       {
         "command": "vouch.editTour",
-        "title": "Edit Tour",
+        "title": "Edit Review",
         "category": "Vouch",
         "icon": "$(edit)"
       },
       {
         "command": "vouch.endTour",
-        "title": "End Tour",
+        "title": "End Review",
         "category": "Vouch",
         "icon": "$(debug-stop)"
       },
@@ -126,7 +126,7 @@
       },
       {
         "command": "vouch.hideMarkers",
-        "title": "Hide Tour Markers",
+        "title": "Hide Review Markers",
         "category": "Vouch",
         "icon": "$(eye-closed)"
       },
@@ -151,18 +151,18 @@
       },
       {
         "command": "vouch.openTourFile",
-        "title": "Open Tour File...",
+        "title": "Open Review File...",
         "icon": "$(folder-opened)",
         "category": "Vouch"
       },
       {
         "command": "vouch.openTourUrl",
-        "title": "Open Tour URL...",
+        "title": "Open Review URL...",
         "category": "Vouch"
       },
       {
         "command": "vouch.previewTour",
-        "title": "Preview Tour",
+        "title": "Preview Review",
         "icon": "$(preview)"
       },
       {
@@ -172,7 +172,7 @@
       },
       {
         "command": "vouch.recordTour",
-        "title": "Record Tour",
+        "title": "Record Review",
         "category": "Vouch",
         "icon": "$(add)"
       },
@@ -183,7 +183,7 @@
       },
       {
         "command": "vouch.saveTourStep",
-        "title": "Save Step",
+        "title": "Save Comment",
         "enablement": "!commentIsEmpty"
       },
       {
