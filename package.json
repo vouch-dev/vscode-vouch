@@ -564,7 +564,7 @@
     ],
     "jsonValidation": [
       {
-        "fileMatch": "*.tour",
+        "fileMatch": "*.review",
         "url": "https://aka.ms/vouch-schema"
       }
     ],
@@ -586,7 +586,7 @@
       {
         "id": "json",
         "extensions": [
-          ".tour"
+          ".review"
         ]
       }
     ]

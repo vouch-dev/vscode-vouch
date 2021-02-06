@@ -196,11 +196,11 @@ export function registerPlayerCommands() {
     async () => {
       const uri = await vscode.window.showOpenDialog({
         filters: {
-          Tours: ["tour"]
+          Tours: ["review"]
         },
         canSelectFolders: false,
         canSelectMany: false,
-        openLabel: "Open Tour"
+        openLabel: "Open Review"
       });
 
       if (!uri) {

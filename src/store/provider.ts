@@ -8,7 +8,7 @@ import { EXTENSION_NAME, VSCODE_DIRECTORY } from "../constants";
 import { appendUriPath, readUriContents, updateMarkerTitles } from "../utils";
 import { endCurrentCodeTour } from "./actions";
 
-const MAIN_TOUR_FILES = [".tour", `${VSCODE_DIRECTORY}/main.tour`];
+const MAIN_TOUR_FILES = [".review", `${VSCODE_DIRECTORY}/main.review`];
 const SUB_TOUR_DIRECTORIES = [`${VSCODE_DIRECTORY}/tours`, `.vouch_reviews`];
 
 const HAS_TOURS_KEY = `${EXTENSION_NAME}:hasTours`;

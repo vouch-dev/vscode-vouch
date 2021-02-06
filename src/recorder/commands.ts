@@ -47,7 +47,7 @@ export function registerRecorderCommands() {
       : `${workspaceRoot.path}/`;
 
     return workspaceRoot.with({
-      path: `${prefix}.vouch_reviews/${file}.tour`
+      path: `${prefix}.vouch_reviews/${file}.review`
     });
   }
 
@@ -73,7 +73,7 @@ export function registerRecorderCommands() {
     const tourTitle =
       typeof title === "string"
         ? title
-        : path.basename(title.path).replace(".tour", "");
+        : path.basename(title.path).replace(".review", "");
 
     const tour = { title: tourTitle, steps: [] };
     if (ref && ref !== "HEAD") {
