@@ -9,7 +9,7 @@ import { appendUriPath, readUriContents, updateMarkerTitles } from "../utils";
 import { endCurrentCodeTour } from "./actions";
 
 const MAIN_TOUR_FILES = [".tour", `${VSCODE_DIRECTORY}/main.tour`];
-const SUB_TOUR_DIRECTORIES = [`${VSCODE_DIRECTORY}/tours`, `.tours`];
+const SUB_TOUR_DIRECTORIES = [`${VSCODE_DIRECTORY}/tours`, `.vouch_reviews`];
 
 const HAS_TOURS_KEY = `${EXTENSION_NAME}:hasTours`;
 
@@ -123,7 +123,7 @@ async function discoverToursAndUpdateTitles() {
 vscode.workspace.onDidChangeWorkspaceFolders(discoverToursAndUpdateTitles);
 
 const watcher = vscode.workspace.createFileSystemWatcher(
-  "**/{.vscode/tours,.tours}/**/*.{json,tour}"
+  "**/{.vscode/tours,.vouch_reviews}/**/*.{json,tour}"
 );
 
 watcher.onDidChange(discoverToursAndUpdateTitles);

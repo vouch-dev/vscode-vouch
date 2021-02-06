@@ -47,7 +47,7 @@ export function registerRecorderCommands() {
       : `${workspaceRoot.path}/`;
 
     return workspaceRoot.with({
-      path: `${prefix}.tours/${file}.tour`
+      path: `${prefix}.vouch_reviews/${file}.tour`
     });
   }
 
