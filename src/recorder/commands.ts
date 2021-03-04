@@ -483,7 +483,7 @@ export function registerRecorderCommands() {
 
   async function updateTourProperty(tour: Review, property: string) {
     const propertyValue = await vscode.window.showInputBox({
-      prompt: `Enter the ${property} for this tour`,
+      prompt: `Enter the ${property} for this review`,
       // @ts-ignore
       value: tour[property]
     });
@@ -572,7 +572,7 @@ export function registerRecorderCommands() {
     async (node: CodeTourStepNode) => {
       const step = node.tour.comments[node.stepNumber];
       step.title = await vscode.window.showInputBox({
-        prompt: `Enter the title for this tour step`,
+        prompt: `Enter the title for this review comment`,
         value: step.title || ""
       });
 
@@ -585,7 +585,7 @@ export function registerRecorderCommands() {
     async (comment: CodeTourComment) => {
       const step = store.activeTour!.review.comments[store.activeTour!.step];
       const response = await vscode.window.showInputBox({
-        prompt: `Enter the new line # for this tour step (Leave blank to use the selection/document end)`,
+        prompt: `Enter the new line # for this review comment (Leave blank to use the selection/document end)`,
         value: step.line?.toString() || ""
       });
 
