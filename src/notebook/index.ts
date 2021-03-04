@@ -3,7 +3,7 @@
 
 import * as vscode from "vscode";
 import { EXTENSION_NAME, SMALL_ICON_URL } from "../constants";
-import { Vouch } from "../store";
+import { Review } from "../store";
 import { getStepFileUri, getWorkspaceUri, readUriContents } from "../utils";
 
 class CodeTourNotebookProvider implements vscode.NotebookProvider {
@@ -16,13 +16,13 @@ class CodeTourNotebookProvider implements vscode.NotebookProvider {
 
     let contents = await readUriContents(editor.document.uri);
 
-    let tour = <Vouch>JSON.parse(contents);
+    let tour = <Review>JSON.parse(contents);
     tour.id = editor.document.uri.toString();
 
     let steps: any[] = [];
     const workspaceRoot = getWorkspaceUri(tour);
 
-    for (let item of tour.steps) {
+    for (let item of tour.comments) {
       const uri = await getStepFileUri(item, workspaceRoot, tour.ref);
       const document = await vscode.workspace.openTextDocument(uri);
       const contents = document.getText(

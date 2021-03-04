@@ -3,7 +3,7 @@
 
 import { comparer, runInAction, set } from "mobx";
 import * as vscode from "vscode";
-import { store, Vouch } from ".";
+import { store, Review } from ".";
 import { EXTENSION_NAME, VSCODE_DIRECTORY } from "../constants";
 import { appendUriPath, readUriContents, updateMarkerTitles } from "../utils";
 import { endCurrentCodeTour } from "./actions";
@@ -32,14 +32,14 @@ export async function discoverTours(): Promise<void> {
 
     if (store.activeTour) {
       const tour = store.tours.find(
-        tour => tour.id === store.activeTour!.tour.id
+        tour => tour.id === store.activeTour!.review.id
       );
 
       if (tour) {
-        if (!comparer.structural(store.activeTour.tour, tour)) {
+        if (!comparer.structural(store.activeTour.review, tour)) {
           // Since the active tour could be already observed,
           // we want to update it in place with the new properties.
-          set(store.activeTour.tour, tour);
+          set(store.activeTour.review, tour);
         }
       } else {
         // The user deleted the tour
@@ -55,7 +55,7 @@ export async function discoverTours(): Promise<void> {
 
 async function discoverMainTours(
   workspaceUri: vscode.Uri
-): Promise<Vouch[]> {
+): Promise<Review[]> {
   const tours = await Promise.all(
     MAIN_TOUR_FILES.map(async tourFile => {
       try {
@@ -72,7 +72,7 @@ async function discoverMainTours(
   return tours.filter(tour => tour);
 }
 
-async function readTourDirectory(uri: vscode.Uri): Promise<Vouch[]> {
+async function readTourDirectory(uri: vscode.Uri): Promise<Review[]> {
   try {
     const tourFiles = await vscode.workspace.fs.readDirectory(uri);
     const tours = await Promise.all(
@@ -95,7 +95,7 @@ async function readTourDirectory(uri: vscode.Uri): Promise<Vouch[]> {
 
 async function readTourFile(
   tourUri: vscode.Uri
-): Promise<Vouch | undefined> {
+): Promise<Review | undefined> {
   try {
     const tourContent = await readUriContents(tourUri);
     const tour = JSON.parse(tourContent);
@@ -104,7 +104,7 @@ async function readTourFile(
   } catch { }
 }
 
-async function discoverSubTours(workspaceUri: vscode.Uri): Promise<Vouch[]> {
+async function discoverSubTours(workspaceUri: vscode.Uri): Promise<Review[]> {
   const tours = await Promise.all(
     SUB_TOUR_DIRECTORIES.map(directory => {
       const uri = appendUriPath(workspaceUri, directory);

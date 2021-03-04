@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { commands, EventEmitter, Memento, Uri, window } from "vscode";
-import { store, Vouch } from ".";
+import { store, Review } from ".";
 import { EXTENSION_NAME, FS_SCHEME, FS_SCHEME_CONTENT } from "../constants";
 import { startPlayer, stopPlayer } from "../player";
 import {
@@ -17,19 +17,19 @@ const CAN_EDIT_TOUR_KEY = `${EXTENSION_NAME}:canEditTour`;
 const IN_TOUR_KEY = `${EXTENSION_NAME}:inTour`;
 const RECORDING_KEY = `${EXTENSION_NAME}:recording`;
 
-const _onDidEndTour = new EventEmitter<Vouch>();
+const _onDidEndTour = new EventEmitter<Review>();
 export const onDidEndTour = _onDidEndTour.event;
 
-const _onDidStartTour = new EventEmitter<[Vouch, number]>();
+const _onDidStartTour = new EventEmitter<[Review, number]>();
 export const onDidStartTour = _onDidStartTour.event;
 
 export function startCodeTour(
-  tour: Vouch,
+  tour: Review,
   stepNumber?: number,
   workspaceRoot?: Uri,
   startInEditMode: boolean = false,
   canEditTour: boolean = true,
-  tours?: Vouch[]
+  tours?: Review[]
 ) {
   startPlayer();
 
@@ -37,9 +37,9 @@ export function startCodeTour(
     workspaceRoot = getWorkspaceUri(tour);
   }
 
-  const step = stepNumber ? stepNumber : tour.steps.length ? 0 : -1;
+  const step = stepNumber ? stepNumber : tour.comments.length ? 0 : -1;
   store.activeTour = {
-    tour,
+    review: tour,
     step,
     workspaceRoot,
     thread: null,
@@ -58,7 +58,7 @@ export function startCodeTour(
 }
 
 export async function selectTour(
-  tours: Vouch[],
+  tours: Review[],
   workspaceRoot?: Uri
 ): Promise<boolean> {
   const items: any[] = tours.map(tour => ({
@@ -86,7 +86,7 @@ export async function selectTour(
 
 export async function endCurrentCodeTour(fireEvent: boolean = true) {
   if (fireEvent) {
-    _onDidEndTour.fire(store.activeTour!.tour);
+    _onDidEndTour.fire(store.activeTour!.review);
   }
 
   if (store.isRecording) {
@@ -112,7 +112,7 @@ export async function endCurrentCodeTour(fireEvent: boolean = true) {
 export function moveCurrentCodeTourBackward() {
   --store.activeTour!.step;
 
-  _onDidStartTour.fire([store.activeTour!.tour, store.activeTour!.step]);
+  _onDidStartTour.fire([store.activeTour!.review, store.activeTour!.step]);
 }
 
 export async function moveCurrentCodeTourForward() {
@@ -120,7 +120,7 @@ export async function moveCurrentCodeTourForward() {
 
   store.activeTour!.step++;
 
-  _onDidStartTour.fire([store.activeTour!.tour, store.activeTour!.step]);
+  _onDidStartTour.fire([store.activeTour!.review, store.activeTour!.step]);
 }
 
 function isLiveShareWorkspace(uri: Uri) {
@@ -133,7 +133,7 @@ function isLiveShareWorkspace(uri: Uri) {
 export async function promptForTour(
   globalState: Memento,
   workspaceRoot: Uri = getWorkspaceKey(),
-  tours: Vouch[] = store.tours
+  tours: Review[] = store.tours
 ): Promise<boolean> {
   const key = `${EXTENSION_NAME}:${workspaceRoot}`;
   if (
@@ -165,13 +165,13 @@ export async function promptForTour(
   return false;
 }
 
-export async function exportTour(tour: Vouch) {
+export async function exportTour(tour: Review) {
   const newTour = {
     ...tour
   };
 
-  newTour.steps = await Promise.all(
-    newTour.steps.map(async step => {
+  newTour.comments = await Promise.all(
+    newTour.comments.map(async step => {
       if (step.contents || step.uri || !step.file) {
         return step;
       }

@@ -3,17 +3,17 @@
 
 import { observable } from "mobx";
 import { commands, ExtensionContext, Uri, workspace } from "vscode";
-import { store, Vouch } from ".";
+import { store, Review } from ".";
 
 const CODETOUR_PROGRESS_KEY = "vouch:progress";
 
 export var progress: {
   update(): void;
-  isComplete(tour: Vouch, stepNumber?: number): boolean;
+  isComplete(tour: Review, stepNumber?: number): boolean;
   reset(): void;
 };
 
-function getProgress(tour: Vouch) {
+function getProgress(tour: Review) {
   const progress = store.progress.find(([id]) => tour.id === id);
   return progress?.[1] || observable([]);
 }
@@ -24,14 +24,14 @@ export function initializeStorage(context: ExtensionContext) {
   progress = {
     async update() {
       const progress = store.progress.find(
-        ([id]) => store.activeTour?.tour.id === id
+        ([id]) => store.activeTour?.review.id === id
       );
 
       if (progress && !progress![1].includes(store.activeTour!.step)) {
         progress![1].push(store.activeTour!.step);
       } else {
         store.progress.push([
-          store.activeTour!.tour.id,
+          store.activeTour!.review.id,
           [store.activeTour!.step]
         ]);
       }
@@ -39,15 +39,15 @@ export function initializeStorage(context: ExtensionContext) {
       commands.executeCommand("setContext", "vouch:hasProgress", true);
       return context.globalState.update(CODETOUR_PROGRESS_KEY, store.progress);
     },
-    isComplete(tour: Vouch, stepNumber?: number): boolean {
+    isComplete(tour: Review, stepNumber?: number): boolean {
       const tourProgress = getProgress(tour);
       if (stepNumber !== undefined) {
         return tourProgress.includes(stepNumber);
       } else {
-        return tourProgress.length >= tour.steps.length;
+        return tourProgress.length >= tour.comments.length;
       }
     },
-    async reset(tour?: Vouch) {
+    async reset(tour?: Review) {
       commands.executeCommand("setContext", "vouch:hasProgress", false);
 
       store.progress = tour

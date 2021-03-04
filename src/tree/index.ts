@@ -35,9 +35,9 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
         ]),
         store.activeTour
           ? [
-            store.activeTour.tour.title,
-            store.activeTour.tour.description,
-            store.activeTour.tour.steps.map(step => [
+            store.activeTour.review.title,
+            store.activeTour.review.description,
+            store.activeTour.review.comments.map(step => [
               step.title,
               step.markerTitle,
               step.description
@@ -64,20 +64,20 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
 
         if (
           store.activeTour &&
-          !store.tours.find(tour => tour.id === store.activeTour?.tour.id)
+          !store.tours.find(tour => tour.id === store.activeTour?.review.id)
         ) {
           tours.unshift(
-            new CodeTourNode(store.activeTour.tour, this.extensionPath)
+            new CodeTourNode(store.activeTour.review, this.extensionPath)
           );
         }
 
         return tours;
       }
     } else if (element instanceof CodeTourNode) {
-      if (element.tour.steps.length === 0) {
+      if (element.tour.comments.length === 0) {
         let item;
 
-        if (store.isRecording && store.activeTour?.tour.id == element.tour.id) {
+        if (store.isRecording && store.activeTour?.review.id == element.tour.id) {
           item = new TreeItem("Add review comment...");
           item.command = {
             command: "vouch.addContentStep",
@@ -89,7 +89,7 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
 
         return [item];
       } else {
-        return element.tour.steps.map(
+        return element.tour.comments.map(
           (_, index) => new CodeTourStepNode(element.tour, index)
         );
       }
@@ -109,7 +109,7 @@ class CodeTourTreeProvider implements TreeDataProvider<TreeItem>, Disposable {
   async resolveTreeItem(element: TreeItem): Promise<TreeItem> {
     if (element instanceof CodeTourStepNode) {
       const content = generatePreviewContent(
-        element.tour.steps[element.stepNumber].description
+        element.tour.comments[element.stepNumber].description
       );
 
       const tooltip = new MarkdownString(content);
@@ -146,7 +146,7 @@ export function registerTreeProvider(extensionPath: string) {
   function revealCurrentStepNode() {
     setTimeout(() => {
       treeView.reveal(
-        new CodeTourStepNode(store.activeTour!.tour, store.activeTour!.step)
+        new CodeTourStepNode(store.activeTour!.review, store.activeTour!.step)
       );
     }, 300);
   }
@@ -155,8 +155,8 @@ export function registerTreeProvider(extensionPath: string) {
     () => [
       store.activeTour
         ? [
-          store.activeTour.tour.title,
-          store.activeTour.tour.steps.map(step => [step.title]),
+          store.activeTour.review.title,
+          store.activeTour.review.comments.map(step => [step.title]),
           store.activeTour.step
         ]
         : null
@@ -165,7 +165,7 @@ export function registerTreeProvider(extensionPath: string) {
       if (store.activeTour && store.activeTour.step >= 0) {
         if (
           !treeView.visible ||
-          store.activeTour.tour.steps[store.activeTour.step].view
+          store.activeTour.review.comments[store.activeTour.step].view
         ) {
           isRevealPending = true;
           return;

@@ -29,8 +29,8 @@ export function registerStatusBar() {
       store.activeTour
         ? [
           store.activeTour.step,
-          store.activeTour.tour.title,
-          store.activeTour.tour.steps.length
+          store.activeTour.review.title,
+          store.activeTour.review.comments.length
         ]
         : null,
       store.isRecording
@@ -42,10 +42,10 @@ export function registerStatusBar() {
         }
 
         const prefix = store.isRecording ? "Recording " : "";
-        const tourTitle = getTourTitle(store.activeTour.tour);
+        const tourTitle = getTourTitle(store.activeTour.review);
 
         currentTourItem.text = `${prefix}Vouch: #${store.activeTour.step + 1
-          } of ${store.activeTour.tour.steps.length} (${tourTitle})`;
+          } of ${store.activeTour.review.comments.length} (${tourTitle})`;
       } else {
         if (currentTourItem) {
           currentTourItem.dispose();

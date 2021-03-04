@@ -4,7 +4,7 @@
 import { reaction } from "mobx";
 import * as vscode from "vscode";
 import { FS_SCHEME_CONTENT, ICON_URL } from "../constants";
-import { CodeTourStep, store, Vouch } from "../store";
+import { CodeTourStep, store, Review } from "../store";
 import { getStepFileUri, getWorkspaceUri } from "../utils";
 
 const DISABLED_SCHEMES = [FS_SCHEME_CONTENT, "comment"];
@@ -16,7 +16,7 @@ const TOUR_DECORATOR = vscode.window.createTextEditorDecorationType({
   overviewRulerLane: vscode.OverviewRulerLane.Right
 });
 
-type CodeTourStepTuple = [Vouch, CodeTourStep, number];
+type CodeTourStepTuple = [Review, CodeTourStep, number];
 
 // TODO: Add support for regex/market steps.
 async function getTourSteps(
@@ -24,7 +24,7 @@ async function getTourSteps(
   lineNumber?: number
 ): Promise<CodeTourStepTuple[]> {
   const steps: CodeTourStepTuple[] = store.tours.flatMap(tour =>
-    tour.steps.map(
+    tour.comments.map(
       (step, stepNumber) => [tour, step, stepNumber] as CodeTourStepTuple
     )
   );
@@ -95,7 +95,7 @@ export async function registerDecorators() {
   reaction(
     () => [
       store.showMarkers,
-      store.tours.map(tour => [tour.title, tour.steps])
+      store.tours.map(tour => [tour.title, tour.comments])
     ],
     () => {
       const activeEditor = vscode.window.activeTextEditor;

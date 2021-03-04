@@ -21,7 +21,7 @@ import {
   workspace
 } from "vscode";
 import { SMALL_ICON_URL } from "../constants";
-import { store, Vouch } from "../store";
+import { store, Review } from "../store";
 import {
   getActiveStepMarker,
   getActiveTourNumber,
@@ -163,16 +163,16 @@ const VIEW_COMMANDS = new Map([
   ["terminal", "workbench.panel.terminal"]
 ]);
 
-function getPreviousTour(): Vouch | undefined {
+function getPreviousTour(): Review | undefined {
   const previousTour = store.tours.find(
-    tour => tour.nextTour === store.activeTour?.tour.title
+    tour => tour.nextTour === store.activeTour?.review.title
   );
 
   if (previousTour) {
     return previousTour;
   }
 
-  const match = store.activeTour?.tour.title.match(/^#?(\d+)\s+-/);
+  const match = store.activeTour?.review.title.match(/^#?(\d+)\s+-/);
   if (match) {
     const previousTourNumber = Number(match[1]) - 1;
     return store.tours.find(tour =>
@@ -181,10 +181,10 @@ function getPreviousTour(): Vouch | undefined {
   }
 }
 
-function getNextTour(): Vouch | undefined {
-  if (store.activeTour?.tour.nextTour) {
+function getNextTour(): Review | undefined {
+  if (store.activeTour?.review.nextTour) {
     return store.tours.find(
-      tour => tour.title === store.activeTour?.tour.nextTour
+      tour => tour.title === store.activeTour?.review.nextTour
     );
   } else {
     const tourNumber = getActiveTourNumber();
@@ -202,10 +202,10 @@ async function renderCurrentStep() {
     store.activeTour!.thread.dispose();
   }
 
-  const currentTour = store.activeTour!.tour;
+  const currentTour = store.activeTour!.review;
   const currentStep = store.activeTour!.step;
 
-  const step = currentTour!.steps[currentStep];
+  const step = currentTour!.comments[currentStep];
   if (!step) {
     return;
   }
@@ -238,7 +238,7 @@ async function renderCurrentStep() {
   }
 
   const range = new Range(line!, 0, line!, 0);
-  let label = `Comment #${currentStep + 1} of ${currentTour!.steps.length}`;
+  let label = `Comment #${currentStep + 1} of ${currentTour!.comments.length}`;
 
   if (currentTour.title) {
     const title = getTourTitle(currentTour);
@@ -251,8 +251,8 @@ async function renderCurrentStep() {
   let content = step.description;
 
   let hasPreviousStep = currentStep > 0;
-  const hasNextStep = currentStep < currentTour.steps.length - 1;
-  const isFinalStep = currentStep === currentTour.steps.length - 1;
+  const hasNextStep = currentStep < currentTour.comments.length - 1;
+  const isFinalStep = currentStep === currentTour.comments.length - 1;
 
   const showNavigation = hasPreviousStep || hasNextStep || isFinalStep;
   if (!store.isRecording && showNavigation) {
@@ -407,8 +407,8 @@ reaction(
     store.activeTour
       ? [
         store.activeTour.step,
-        store.activeTour.tour.title,
-        store.activeTour.tour.steps.map(step => [
+        store.activeTour.review.title,
+        store.activeTour.review.comments.map(step => [
           step.title,
           step.description,
           step.line,

@@ -6,7 +6,7 @@ import * as vscode from "vscode";
 import { EXTENSION_NAME } from "../constants";
 import { focusPlayer } from "../player";
 import { saveTour } from "../recorder/commands";
-import { store, Vouch } from "../store";
+import { store, Review } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -73,7 +73,7 @@ export function registerPlayerCommands() {
     `${EXTENSION_NAME}.navigateToStep`,
     async (stepNumber: number) => {
       startCodeTour(
-        store.activeTour!.tour,
+        store.activeTour!.review,
         --stepNumber,
         store.activeTour?.workspaceRoot,
         undefined,
@@ -111,7 +111,7 @@ export function registerPlayerCommands() {
     async (codeBlock: string) => {
       const codeSnippet = decodeURIComponent(codeBlock);
 
-      const step = store.activeTour!.tour.steps[store.activeTour!.step];
+      const step = store.activeTour!.review.comments[store.activeTour!.step];
       if (step.selection) {
         await vscode.window.activeTextEditor?.edit(e => {
           const selection = new vscode.Selection(
@@ -131,11 +131,11 @@ export function registerPlayerCommands() {
 
       const lineAdjustment = codeSnippet.split("\n").length - 1;
       if (lineAdjustment > 0) {
-        store.activeTour!.tour.steps[
+        store.activeTour!.review.comments[
           store.activeTour!.step
         ].line! += lineAdjustment;
 
-        saveTour(store.activeTour!.tour);
+        saveTour(store.activeTour!.review);
       }
 
       await vscode.commands.executeCommand("editor.action.formatDocument");
@@ -145,10 +145,10 @@ export function registerPlayerCommands() {
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.startTour`,
     async (
-      tour?: Vouch | CodeTourNode,
+      tour?: Review | CodeTourNode,
       stepNumber?: number,
       workspaceRoot?: vscode.Uri,
-      tours?: Vouch[]
+      tours?: Review[]
     ) => {
       if (tour) {
         const targetTour = tour instanceof CodeTourNode ? tour.tour : tour;

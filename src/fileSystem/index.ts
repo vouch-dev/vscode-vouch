@@ -15,24 +15,24 @@ import {
   workspace
 } from "vscode";
 import { FS_SCHEME } from "../constants";
-import { CodeTourStep, store, Vouch } from "../store";
+import { CodeTourStep, store, Review } from "../store";
 
 export class CodeTourFileSystemProvider implements FileSystemProvider {
   private count = 0;
 
-  getCurrentTourStep(): [Vouch, CodeTourStep] {
-    const tour = store.activeTour!.tour;
-    return [tour, tour.steps[store.activeTour!.step]];
+  getCurrentTourStep(): [Review, CodeTourStep] {
+    const tour = store.activeTour!.review;
+    return [tour, tour.comments[store.activeTour!.step]];
   }
 
-  updateTour(tour: Vouch) {
+  updateTour(tour: Review) {
     const tourUri = Uri.parse(tour.id);
 
     const newTour = {
       ...tour
     };
     delete newTour.id;
-    newTour.steps.forEach(step => {
+    newTour.comments.forEach(step => {
       delete step.markerTitle;
     });
 

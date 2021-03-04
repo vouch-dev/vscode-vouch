@@ -35,11 +35,11 @@ export interface CodeTourStep {
   markerTitle?: string;
 }
 
-export interface Vouch {
+export interface Review {
   id: string;
   title: string;
   description?: string;
-  steps: CodeTourStep[];
+  comments: CodeTourStep[];
   ref?: string;
   isPrimary?: boolean;
   nextTour?: string;
@@ -47,7 +47,7 @@ export interface Vouch {
 }
 
 export interface ActiveTour {
-  tour: Vouch;
+  review: Review;
   step: number;
 
   // When recording, a tour can be active, without
@@ -64,13 +64,13 @@ export interface ActiveTour {
   // they're coming from somewhere other
   // then the active workspace (e.g. a
   // GistPad-managed repo).
-  tours?: Vouch[];
+  tours?: Review[];
 }
 
 type CodeTourProgress = [string, number[]];
 
 export interface Store {
-  tours: Vouch[];
+  tours: Review[];
   activeTour: ActiveTour | null;
   hasTours: boolean;
   isRecording: boolean;

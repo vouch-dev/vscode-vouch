@@ -9,15 +9,15 @@ import {
   Uri
 } from "vscode";
 import { CONTENT_URI, EXTENSION_NAME, FS_SCHEME } from "../constants";
-import { store, Vouch } from "../store";
+import { store, Review } from "../store";
 import { progress } from "../store/storage";
 import { getFileUri, getStepLabel, getWorkspaceUri } from "../utils";
 
-function isRecording(tour: Vouch) {
+function isRecording(tour: Review) {
   return (
     store.isRecording &&
     store.activeTour &&
-    store.activeTour.tour.id === tour.id
+    store.activeTour.review.id === tour.id
   );
 }
 
@@ -28,7 +28,7 @@ const completeIcon = new ThemeIcon(
 );
 
 export class CodeTourNode extends TreeItem {
-  constructor(public tour: Vouch, extensionPath: string) {
+  constructor(public tour: Review, extensionPath: string) {
     super(
       tour.title!,
       isRecording(tour)
@@ -37,7 +37,7 @@ export class CodeTourNode extends TreeItem {
     );
 
     this.tooltip = tour.description;
-    this.description = `${tour.steps.length} comments`;
+    this.description = `${tour.comments.length} comments`;
 
     const contextValues = ["vouch.tour"];
 
@@ -50,7 +50,7 @@ export class CodeTourNode extends TreeItem {
       contextValues.push("recording");
     }
 
-    const isActive = store.activeTour && tour.id === store.activeTour?.tour.id;
+    const isActive = store.activeTour && tour.id === store.activeTour?.review.id;
     if (isActive) {
       contextValues.push("active");
     }
@@ -68,13 +68,13 @@ export class CodeTourNode extends TreeItem {
 }
 
 export class CodeTourStepNode extends TreeItem {
-  constructor(public tour: Vouch, public stepNumber: number) {
+  constructor(public tour: Review, public stepNumber: number) {
     super(getStepLabel(tour, stepNumber));
 
-    const step = tour.steps[stepNumber];
+    const step = tour.comments[stepNumber];
 
     let workspaceRoot, tours;
-    if (store.activeTour && store.activeTour.tour.id === tour.id) {
+    if (store.activeTour && store.activeTour.review.id === tour.id) {
       workspaceRoot = store.activeTour.workspaceRoot;
       tours = store.activeTour.tours;
     }
@@ -104,7 +104,7 @@ export class CodeTourStepNode extends TreeItem {
 
     const isActive =
       store.activeTour &&
-      tour.id === store.activeTour?.tour.id &&
+      tour.id === store.activeTour?.review.id &&
       store.activeTour.step === stepNumber;
 
     if (isActive) {
@@ -123,7 +123,7 @@ export class CodeTourStepNode extends TreeItem {
       contextValues.push("hasPrevious");
     }
 
-    if (stepNumber < tour.steps.length - 1) {
+    if (stepNumber < tour.comments.length - 1) {
       contextValues.push("hasNext");
     }
 

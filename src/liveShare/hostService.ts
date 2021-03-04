@@ -16,7 +16,7 @@ export async function initializeService(vslsApi: vsls.LiveShare) {
       return null;
     }
 
-    const tour = { ...store.activeTour.tour };
+    const tour = { ...store.activeTour.review };
     tour.id = vslsApi.convertLocalUriToShared(Uri.parse(tour.id)).toString();
 
     return {

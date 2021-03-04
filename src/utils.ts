@@ -6,16 +6,16 @@ import * as path from "path";
 import { Uri, workspace } from "vscode";
 import { CONTENT_URI, FS_SCHEME } from "./constants";
 import { api } from "./git";
-import { CodeTourStep, store, Vouch } from "./store";
+import { CodeTourStep, store, Review } from "./store";
 
 const HEADING_PATTERN = /^#+\s*(.*)/;
 export function getStepLabel(
-  tour: Vouch,
+  tour: Review,
   stepNumber: number,
   includeStepNumber: boolean = true,
   defaultToFileName: boolean = true
 ) {
-  const step = tour.steps[stepNumber];
+  const step = tour.comments[stepNumber];
 
   const prefix = includeStepNumber ? `#${stepNumber + 1} - ` : "";
   let label = "";
@@ -34,7 +34,7 @@ export function getStepLabel(
   return `${prefix}${label}`;
 }
 
-export function getTourTitle(tour: Vouch) {
+export function getTourTitle(tour: Review) {
   if (tour.title.match(/^#?\d+\s-/)) {
     return tour.title.split("-")[1].trim();
   }
@@ -116,11 +116,11 @@ export function getWorkspaceKey() {
   return workspace.workspaceFile || workspace.workspaceFolders![0].uri;
 }
 
-export function getWorkspacePath(tour: Vouch) {
+export function getWorkspacePath(tour: Review) {
   return getWorkspaceUri(tour)?.toString() || "";
 }
 
-export function getWorkspaceUri(tour: Vouch): Uri | undefined {
+export function getWorkspaceUri(tour: Review): Uri | undefined {
   const tourUri = Uri.parse(tour.id);
   return (
     workspace.getWorkspaceFolder(tourUri)?.uri ||
@@ -128,7 +128,7 @@ export function getWorkspaceUri(tour: Vouch): Uri | undefined {
   );
 }
 
-function getTourNumber(tour: Vouch): number | undefined {
+function getTourNumber(tour: Review): number | undefined {
   const match = tour.title.match(/^#?(\d+)\s+-/);
   if (match) {
     return Number(match[1]);
@@ -136,10 +136,10 @@ function getTourNumber(tour: Vouch): number | undefined {
 }
 
 export function getActiveTourNumber(): number | undefined {
-  return getTourNumber(store.activeTour!.tour);
+  return getTourNumber(store.activeTour!.review);
 }
 
-function getStepMarkerPrefix(tour: Vouch): string | undefined {
+function getStepMarkerPrefix(tour: Review): string | undefined {
   if (tour.stepMarker) {
     return tour.stepMarker;
   } else {
@@ -151,11 +151,11 @@ function getStepMarkerPrefix(tour: Vouch): string | undefined {
 }
 
 function getActiveStepMarkerPrefix(): string | undefined {
-  return getStepMarkerPrefix(store.activeTour!.tour);
+  return getStepMarkerPrefix(store.activeTour!.review);
 }
 
 export function getActiveStepMarker(): string | undefined {
-  if (!isMarkerStep(store.activeTour!.tour, store.activeTour!.step)) {
+  if (!isMarkerStep(store.activeTour!.review, store.activeTour!.step)) {
     return;
   }
 
@@ -175,22 +175,22 @@ export async function getStepMarkerForLine(uri: Uri, lineNumber: number) {
   }
 }
 
-function isMarkerTour(tour: Vouch): boolean {
+function isMarkerTour(tour: Review): boolean {
   return !!getStepMarkerPrefix(tour);
 }
 
-function isMarkerStep(tour: Vouch, stepNumber: number) {
-  const step = tour.steps[stepNumber];
+function isMarkerStep(tour: Review, stepNumber: number) {
+  const step = tour.comments[stepNumber];
   return getStepMarkerPrefix(tour) && step.file && !step.line;
 }
 
-async function updateMarkerTitleForStep(tour: Vouch, stepNumber: number) {
+async function updateMarkerTitleForStep(tour: Review, stepNumber: number) {
   if (!isMarkerStep(tour, stepNumber)) {
     return;
   }
 
   const uri = await getStepFileUri(
-    tour.steps[stepNumber],
+    tour.comments[stepNumber],
     getWorkspaceUri(tour),
     tour.ref
   );
@@ -204,16 +204,16 @@ async function updateMarkerTitleForStep(tour: Vouch, stepNumber: number) {
 
   const match = document.getText().match(markerPattern);
   if (match) {
-    tour.steps[stepNumber].markerTitle = match[1];
+    tour.comments[stepNumber].markerTitle = match[1];
   }
 }
 
-async function updateMarkerTitlesForTour(tour: Vouch) {
+async function updateMarkerTitlesForTour(tour: Review) {
   if (!isMarkerTour(tour)) {
     return;
   }
 
-  tour.steps.forEach((_, index) => updateMarkerTitleForStep(tour, index));
+  tour.comments.forEach((_, index) => updateMarkerTitleForStep(tour, index));
 }
 
 export async function updateMarkerTitles() {
