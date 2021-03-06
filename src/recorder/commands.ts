@@ -146,7 +146,7 @@ export function registerRecorderCommands() {
       }
     }
 
-    const ref = await promptForTourRef(workspaceRoot);
+    const ref = "HEAD";
     const tour = await writeTourFile(workspaceRoot, tourTitle, ref);
 
     startCodeTour(tour, 0, workspaceRoot, true);
@@ -615,7 +615,7 @@ export function registerRecorderCommands() {
         );
       }
 
-      const ref = await promptForTourRef(workspaceRoot);
+      const ref = "HEAD";
       if (ref) {
         if (ref === "HEAD") {
           delete node.tour.ref;
@@ -723,73 +723,4 @@ export function registerRecorderCommands() {
     }
   );
 
-  interface GitRefQuickPickItem extends vscode.QuickPickItem {
-    ref?: string;
-  }
-
-  async function promptForTourRef(
-    workspaceRoot: vscode.Uri
-  ): Promise<string | undefined> {
-    // If for some reason the Git extension isn't available,
-    // then we won't be able to ask the user to select a git ref.
-    if (!api || !api.getRepository) {
-      return;
-    }
-
-    const repository = api.getRepository(workspaceRoot);
-
-    // The opened project isn't a git repository, and
-    // so there's no commit/tag/branch to associate the tour with.
-    if (!repository) {
-      return;
-    }
-
-    const currentBranch = repository.state.HEAD!.name;
-    let items: GitRefQuickPickItem[] = [
-      {
-        label: "$(circle-slash) None",
-        description:
-          "Allow the tour to apply to all versions of this repository",
-        ref: "HEAD",
-        alwaysShow: true
-      },
-      {
-        label: `$(git-branch) Current branch (${currentBranch})`,
-        description: "Allow the tour to apply to all versions of this branch",
-        ref: currentBranch,
-        alwaysShow: true
-      },
-      {
-        label: "$(git-commit) Current commit",
-        description: "Keep the tour associated with a specific commit",
-        ref: repository.state.HEAD ? repository.state.HEAD.commit! : "",
-        alwaysShow: true
-      }
-    ];
-
-    const tags = repository.state.refs
-      .filter(ref => ref.type === RefType.Tag)
-      .map(ref => ref.name!)
-      .sort()
-      .map(ref => ({
-        label: `$(tag) ${ref}`,
-        description: "Keep the tour associated with a specific tag",
-        ref
-      }));
-
-    if (tags) {
-      items.push(...tags);
-    }
-
-    const response = await vscode.window.showQuickPick<GitRefQuickPickItem>(
-      items,
-      {
-        placeHolder: "Select the Git ref to associate the tour with:"
-      }
-    );
-
-    if (response) {
-      return response.ref;
-    }
-  }
 }
