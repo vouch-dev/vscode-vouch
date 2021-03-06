@@ -72,10 +72,6 @@
         "title": "Change Description"
       },
       {
-        "command": "vouch.changeTourRef",
-        "title": "Change Git Ref"
-      },
-      {
         "command": "vouch.changeTourStepLine",
         "title": "Change Line"
       },
@@ -252,10 +248,6 @@
         },
         {
           "command": "vouch.addTourStep",
-          "when": "false"
-        },
-        {
-          "command": "vouch.changeTourRef",
           "when": "false"
         },
         {
@@ -461,11 +453,6 @@
           "command": "vouch.changeTourDescription",
           "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
           "group": "change@2"
-        },
-        {
-          "command": "vouch.changeTourRef",
-          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/ && gitOpenRepositoryCount != 0",
-          "group": "change@3"
         },
         {
           "command": "vouch.makeTourPrimary",

@@ -600,35 +600,6 @@ export function registerRecorderCommands() {
   );
 
   vscode.commands.registerCommand(
-    `${EXTENSION_NAME}.changeTourRef`,
-    async (node: CodeTourNode) => {
-      const workspaceRoot =
-        store.activeTour &&
-          store.activeTour.review.id === node.tour.id &&
-          store.activeTour.workspaceRoot
-          ? store.activeTour.workspaceRoot
-          : workspace.getWorkspaceFolder(vscode.Uri.parse(node.tour.id))?.uri;
-
-      if (!workspaceRoot) {
-        return vscode.window.showErrorMessage(
-          "You can't change the git ref of an embedded tour file."
-        );
-      }
-
-      const ref = "HEAD";
-      if (ref) {
-        if (ref === "HEAD") {
-          delete node.tour.ref;
-        } else {
-          node.tour.ref = ref;
-        }
-      }
-
-      saveTour(node.tour);
-    }
-  );
-
-  vscode.commands.registerCommand(
     `${EXTENSION_NAME}.deleteTour`,
     async (node: CodeTourNode, additionalNodes: CodeTourNode[]) => {
       const messageSuffix = additionalNodes
