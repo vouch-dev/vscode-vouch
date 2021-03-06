@@ -47,7 +47,7 @@ export function registerRecorderCommands() {
       : `${workspaceRoot.path}/`;
 
     return workspaceRoot.with({
-      path: `${prefix}.vouch_reviews/${file}.review`
+      path: `${prefix}.vscode/reviews/${file}.review`
     });
   }
 
@@ -75,7 +75,7 @@ export function registerRecorderCommands() {
         ? title
         : path.basename(title.path).replace(".review", "");
 
-    const tour = { title: tourTitle, steps: [] };
+    const tour = { title: tourTitle, comments: [] };
     if (ref && ref !== "HEAD") {
       (tour as any).ref = ref;
     }

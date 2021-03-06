@@ -4,7 +4,7 @@
   "type": "object",
   "required": [
     "title",
-    "steps"
+    "comments"
   ],
   "properties": {
     "title": {
@@ -23,9 +23,9 @@
       "type": "boolean",
       "description": "Specifies whether the tour represents the primary tour for this codebase."
     },
-    "steps": {
+    "comments": {
       "type": "array",
-      "description": "Specifies the list of steps that are included in the code tour.",
+      "description": "Specifies the list of comments that are included in the review.",
       "default": [],
       "items": {
         "type": "object",
