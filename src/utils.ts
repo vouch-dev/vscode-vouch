@@ -6,7 +6,7 @@ import * as path from "path";
 import { Uri, workspace } from "vscode";
 import { CONTENT_URI, FS_SCHEME } from "./constants";
 import { api } from "./git";
-import { CodeTourStep, store, Review } from "./store";
+import { CodeReviewComment, Review, store } from "./store";
 
 const HEADING_PATTERN = /^#+\s*(.*)/;
 export function getStepLabel(
@@ -75,7 +75,7 @@ export function getFileUri(file: string, workspaceRoot?: Uri) {
 }
 
 export async function getStepFileUri(
-  step: CodeTourStep,
+  step: CodeReviewComment,
   workspaceRoot?: Uri,
   ref?: string
 ): Promise<Uri> {

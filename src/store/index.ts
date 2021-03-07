@@ -9,7 +9,7 @@ export interface CodeTourStepPosition {
   character: number;
 }
 
-export interface CodeTourStep {
+export interface CodeReviewComment {
   title?: string;
   description: string;
 
@@ -39,7 +39,7 @@ export interface Review {
   id: string;
   title: string;
   description?: string;
-  comments: CodeTourStep[];
+  comments: CodeReviewComment[];
   ref?: string;
   isPrimary?: boolean;
   nextTour?: string;

@@ -6,9 +6,8 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { workspace } from "vscode";
 import { EXTENSION_NAME, FS_SCHEME_CONTENT } from "../constants";
-import { api, RefType } from "../git";
 import { CodeTourComment } from "../player";
-import { CodeTourStep, store, Review } from "../store";
+import { CodeReviewComment, Review, store } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -334,7 +333,7 @@ export function registerRecorderCommands() {
       const workspaceRoot = getActiveWorkspacePath();
       const file = getRelativePath(workspaceRoot, thread!.uri.path);
 
-      const step: CodeTourStep = {
+      const step: CodeReviewComment = {
         file,
         description: reply.text
       };
