@@ -139,10 +139,6 @@
         "icon": "$(eye-closed)"
       },
       {
-        "command": "vouch.makeTourPrimary",
-        "title": "Make Primary"
-      },
-      {
         "command": "vouch.moveTourStepForward",
         "title": "Move Down",
         "icon": "$(arrow-down)"
@@ -205,10 +201,6 @@
         "title": "Step Through Review",
         "category": "Vouch",
         "icon": "$(debug-start)"
-      },
-      {
-        "command": "vouch.unmakeTourPrimary",
-        "title": "Unmake Primary"
       },
       {
         "command": "vouch.viewNotebook",
@@ -311,10 +303,6 @@
           "when": "false"
         },
         {
-          "command": "vouch.makeTourPrimary",
-          "when": "false"
-        },
-        {
           "command": "vouch.nextTourStep",
           "when": "false"
         },
@@ -336,10 +324,6 @@
         },
         {
           "command": "vouch.showMarkers",
-          "when": "false"
-        },
-        {
-          "command": "vouch.unmakeTourPrimary",
           "when": "false"
         },
         {
@@ -477,16 +461,6 @@
           "command": "vouch.changeTourDescription",
           "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
           "group": "change@2"
-        },
-        {
-          "command": "vouch.makeTourPrimary",
-          "when": "viewItem =~ /^vouch.tour(.recording)?(.active)?$/",
-          "group": "edit@1"
-        },
-        {
-          "command": "vouch.unmakeTourPrimary",
-          "when": "viewItem =~ /^vouch.tour.primary(.recording)?(.active)?$/",
-          "group": "edit@2"
         },
         {
           "command": "vouch.editTour",
