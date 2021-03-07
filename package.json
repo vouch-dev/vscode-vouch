@@ -1,20 +1,20 @@
 {
   "name": "vouch",
   "displayName": "Vouch",
-  "description": "VS Code extension that allows you to record and playback guided tours of codebases, directly within the editor",
+  "description": "VS Code extension that allows you to record and playback reviews of codebases, directly within the editor",
   "publisher": "vsls-contrib",
   "version": "0.0.43",
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "rndhouse"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/vouch"
+    "url": "https://github.com/vouch-dev/vscode-vouch"
   },
   "bugs": {
-    "url": "https://github.com/microsoft/vouch/issues"
+    "url": "https://github.com/vouch-dev/vscode-vouch/issues"
   },
-  "homepage": "https://github.com/microsoft/vouch#readme",
+  "homepage": "https://github.com/vouch-dev/vscode-vouch#readme",
   "license": "MIT",
   "icon": "images/icon.png",
   "engines": {
