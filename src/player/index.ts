@@ -90,6 +90,7 @@ export class PlayerCodeReviewComment implements Comment {
 
   constructor(
     content: string,
+    status: string,
     public label: string = "",
     public parent: CommentThread,
     public mode: CommentMode
@@ -99,6 +100,8 @@ export class PlayerCodeReviewComment implements Comment {
 
     this.body = new MarkdownString(body);
     this.body.isTrusted = true;
+
+    this.author.name = status;
   }
 }
 
@@ -306,6 +309,7 @@ async function renderCurrentStep() {
 
   const comment = new PlayerCodeReviewComment(
     content,
+    step.summary.toLocaleUpperCase(),
     label,
     store.activeTour!.thread!,
     mode

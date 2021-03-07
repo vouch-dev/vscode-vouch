@@ -371,6 +371,7 @@ export function registerRecorderCommands() {
       thread!.comments = [
         new PlayerCodeReviewComment(
           reply.text,
+          step.summary.toLocaleUpperCase(),
           label,
           thread!,
           vscode.CommentMode.Preview
