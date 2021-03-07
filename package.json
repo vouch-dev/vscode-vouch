@@ -50,11 +50,6 @@
     },
     "commands": [
       {
-        "command": "vouch.addContentStep",
-        "title": "Add Review Comment",
-        "category": "Vouch"
-      },
-      {
         "command": "vouch.addDirectoryStep",
         "title": "Add Review Comment"
       },
@@ -194,10 +189,6 @@
     ],
     "menus": {
       "commandPalette": [
-        {
-          "command": "vouch.addContentStep",
-          "when": "vouch:inTour && vouch:recording && vouch:canEditTour"
-        },
         {
           "command": "vouch.editTour",
           "when": "vouch:inTour && !vouch:recording && vouch:canEditTour"
@@ -408,11 +399,6 @@
         {
           "command": "vouch.startTour",
           "when": "viewItem =~ /^vouch.tour(.primary)?$/",
-          "group": "basic@1"
-        },
-        {
-          "command": "vouch.addContentStep",
-          "when": "viewItem =~ /^vouch.tour(.primary)?.recording/",
           "group": "basic@1"
         },
         {

@@ -257,32 +257,6 @@ export function registerRecorderCommands() {
   }
 
   vscode.commands.registerCommand(
-    `${EXTENSION_NAME}.addContentStep`,
-    action(async () => {
-      const value = store.activeTour?.step === -1 ? "Introduction" : "";
-      const title = await vscode.window.showInputBox({
-        prompt: "Specify the title of the step",
-        value
-      });
-
-      if (!title) {
-        return;
-      }
-
-      const stepNumber = ++store.activeTour!.step;
-      const tour = store.activeTour!.review;
-
-      tour.comments.splice(stepNumber, 0, {
-        title,
-        description: "",
-        summary: "warn"
-      });
-
-      saveTour(tour);
-    })
-  );
-
-  vscode.commands.registerCommand(
     `${EXTENSION_NAME}.addDirectoryStep`,
     action(async (uri: vscode.Uri) => {
       const stepNumber = ++store.activeTour!.step;
