@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { workspace } from "vscode";
 import { EXTENSION_NAME, FS_SCHEME_CONTENT } from "../constants";
 import { PlayerCodeReviewComment } from "../player";
-import { StoreCodeReviewComment, Review, store } from "../store";
+import { Review, store, StoreCodeReviewComment } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -304,22 +304,47 @@ export function registerRecorderCommands() {
   vscode.commands.registerTextEditorCommand(
     `${EXTENSION_NAME}.addSelectionStep`,
     action(async (editor: vscode.TextEditor) => {
-      const stepNumber = ++store.activeTour!.step;
-      const tour = store.activeTour!.review;
-
-      const workspaceRoot = getActiveWorkspacePath();
-      const file = getRelativePath(workspaceRoot, editor.document.uri.path);
-
-      tour.comments.splice(stepNumber, 0, {
-        file,
-        selection: getStepSelection(),
-        description: "",
-        summary: "warn"
-      });
-
-      saveTour(tour);
+      addSelectionStep("pass", editor);
     })
   );
+
+  vscode.commands.registerTextEditorCommand(
+    `${EXTENSION_NAME}.addSelectionStepPass`,
+    action(async (editor: vscode.TextEditor) => {
+      addSelectionStep("pass", editor);
+    })
+  );
+
+  vscode.commands.registerTextEditorCommand(
+    `${EXTENSION_NAME}.addSelectionStepWarn`,
+    action(async (editor: vscode.TextEditor) => {
+      addSelectionStep("warn", editor);
+    })
+  );
+
+  vscode.commands.registerTextEditorCommand(
+    `${EXTENSION_NAME}.addSelectionStepFail`,
+    action(async (editor: vscode.TextEditor) => {
+      addSelectionStep("fail", editor);
+    })
+  );
+
+  function addSelectionStep(summary: string, editor: vscode.TextEditor) {
+    const stepNumber = ++store.activeTour!.step;
+    const tour = store.activeTour!.review;
+
+    const workspaceRoot = getActiveWorkspacePath();
+    const file = getRelativePath(workspaceRoot, editor.document.uri.path);
+
+    tour.comments.splice(stepNumber, 0, {
+      file,
+      selection: getStepSelection(),
+      description: "",
+      summary: summary
+    });
+
+    saveTour(tour);
+  }
 
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.addTourStep`,

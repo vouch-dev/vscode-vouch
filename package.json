@@ -63,6 +63,18 @@
         "title": "Add Review Comment"
       },
       {
+        "command": "vouch.addSelectionStepPass",
+        "title": "Add Review Comment: PASS"
+      },
+      {
+        "command": "vouch.addSelectionStepWarn",
+        "title": "Add Review Comment: WARN"
+      },
+      {
+        "command": "vouch.addSelectionStepFail",
+        "title": "Add Review Comment: FAIL"
+      },
+      {
         "command": "vouch.addTourStep",
         "title": "Add Comment to Review",
         "enablement": "!commentIsEmpty"
@@ -244,6 +256,18 @@
         },
         {
           "command": "vouch.addSelectionStep",
+          "when": "false"
+        },
+        {
+          "command": "vouch.addSelectionStepPass",
+          "when": "false"
+        },
+        {
+          "command": "vouch.addSelectionStepWarn",
+          "when": "false"
+        },
+        {
+          "command": "vouch.addSelectionStepFail",
           "when": "false"
         },
         {
@@ -531,6 +555,21 @@
           "command": "vouch.addSelectionStep",
           "when": "vouch:recording && editorHasSelection",
           "group": "vouch@1"
+        },
+        {
+          "command": "vouch.addSelectionStepPass",
+          "when": "vouch:recording && editorHasSelection",
+          "group": "vouch@2"
+        },
+        {
+          "command": "vouch.addSelectionStepWarn",
+          "when": "vouch:recording && editorHasSelection",
+          "group": "vouch@3"
+        },
+        {
+          "command": "vouch.addSelectionStepFail",
+          "when": "vouch:recording && editorHasSelection",
+          "group": "vouch@4"
         }
       ]
     },
