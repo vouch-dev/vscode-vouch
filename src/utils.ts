@@ -31,7 +31,7 @@ export function getStepLabel(
       : decodeURIComponent(step.directory || step.file!);
   }
 
-  return `${prefix}${label}`;
+  return `${prefix}${step.summary.toLocaleUpperCase()}: ${label}`;
 }
 
 export function getTourTitle(tour: Review) {
