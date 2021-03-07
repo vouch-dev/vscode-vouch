@@ -80,10 +80,6 @@
         "enablement": "!commentIsEmpty"
       },
       {
-        "command": "vouch.changeTourDescription",
-        "title": "Change Description"
-      },
-      {
         "command": "vouch.changeTourStepLine",
         "title": "Change Line"
       },
@@ -271,10 +267,6 @@
           "when": "false"
         },
         {
-          "command": "vouch.changeTourDescription",
-          "when": "false"
-        },
-        {
           "command": "vouch.deleteTour",
           "when": "false"
         },
@@ -443,11 +435,6 @@
           "command": "vouch.resetTourProgress",
           "when": "false",
           "group": "basic@2"
-        },
-        {
-          "command": "vouch.changeTourDescription",
-          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
-          "group": "change@2"
         },
         {
           "command": "vouch.editTour",

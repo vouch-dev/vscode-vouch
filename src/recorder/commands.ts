@@ -547,11 +547,6 @@ export function registerRecorderCommands() {
   );
 
   vscode.commands.registerCommand(
-    `${EXTENSION_NAME}.changeTourDescription`,
-    (node: CodeTourNode) => updateTourProperty(node.tour, "description")
-  );
-
-  vscode.commands.registerCommand(
     `${EXTENSION_NAME}.changeTourStepTitle`,
     async (node: CodeTourStepNode) => {
       const step = node.tour.comments[node.stepNumber];
