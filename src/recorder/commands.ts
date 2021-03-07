@@ -6,8 +6,8 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { workspace } from "vscode";
 import { EXTENSION_NAME, FS_SCHEME_CONTENT } from "../constants";
-import { CodeTourComment } from "../player";
-import { CodeReviewComment, Review, store } from "../store";
+import { PlayerCodeReviewComment } from "../player";
+import { StoreCodeReviewComment, Review, store } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -274,7 +274,8 @@ export function registerRecorderCommands() {
 
       tour.comments.splice(stepNumber, 0, {
         title,
-        description: ""
+        description: "",
+        summary: "warn"
       });
 
       saveTour(tour);
@@ -292,7 +293,8 @@ export function registerRecorderCommands() {
 
       tour.comments.splice(stepNumber, 0, {
         directory,
-        description: ""
+        description: "",
+        summary: "warn"
       });
 
       saveTour(tour);
@@ -311,7 +313,8 @@ export function registerRecorderCommands() {
       tour.comments.splice(stepNumber, 0, {
         file,
         selection: getStepSelection(),
-        description: ""
+        description: "",
+        summary: "warn"
       });
 
       saveTour(tour);
@@ -333,9 +336,10 @@ export function registerRecorderCommands() {
       const workspaceRoot = getActiveWorkspacePath();
       const file = getRelativePath(workspaceRoot, thread!.uri.path);
 
-      const step: CodeReviewComment = {
+      const step: StoreCodeReviewComment = {
         file,
-        description: reply.text
+        description: reply.text,
+        summary: "warn"
       };
 
       step.line = thread!.range.start.line + 1;
@@ -365,7 +369,7 @@ export function registerRecorderCommands() {
 
       thread!.contextValue = contextValues.join(".");
       thread!.comments = [
-        new CodeTourComment(
+        new PlayerCodeReviewComment(
           reply.text,
           label,
           thread!,
@@ -457,7 +461,7 @@ export function registerRecorderCommands() {
 
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.saveTourStep`,
-    async (comment: CodeTourComment) => {
+    async (comment: PlayerCodeReviewComment) => {
       if (!comment.parent) {
         return;
       }
@@ -500,11 +504,11 @@ export function registerRecorderCommands() {
 
   function moveStep(
     movement: number,
-    node: CodeTourStepNode | CodeTourComment
+    node: CodeTourStepNode | PlayerCodeReviewComment
   ) {
     let tour: Review, stepNumber: number;
 
-    if (node instanceof CodeTourComment) {
+    if (node instanceof PlayerCodeReviewComment) {
       tour = store.activeTour!.review;
       stepNumber = store.activeTour!.step;
     } else {
@@ -581,7 +585,7 @@ export function registerRecorderCommands() {
 
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.changeTourStepLine`,
-    async (comment: CodeTourComment) => {
+    async (comment: PlayerCodeReviewComment) => {
       const step = store.activeTour!.review.comments[store.activeTour!.step];
       const response = await vscode.window.showInputBox({
         prompt: `Enter the new line # for this review comment (Leave blank to use the selection/document end)`,
@@ -632,7 +636,7 @@ export function registerRecorderCommands() {
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.deleteTourStep`,
     async (
-      node: CodeTourStepNode | CodeTourComment,
+      node: CodeTourStepNode | PlayerCodeReviewComment,
       additionalNodes: CodeTourStepNode[]
     ) => {
       let tour: Review, steps: number[];

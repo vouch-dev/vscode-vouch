@@ -9,9 +9,10 @@ export interface CodeTourStepPosition {
   character: number;
 }
 
-export interface CodeReviewComment {
+export interface StoreCodeReviewComment {
   title?: string;
   description: string;
+  summary: string,
 
   // If any of the following are set, then only
   // one of them can be, since these properties
@@ -39,7 +40,7 @@ export interface Review {
   id: string;
   title: string;
   description?: string;
-  comments: CodeReviewComment[];
+  comments: StoreCodeReviewComment[];
   ref?: string;
   isPrimary?: boolean;
   nextTour?: string;

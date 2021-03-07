@@ -15,6 +15,10 @@
       "type": "string",
       "description": "Specifies an optional description for the code tour."
     },
+    "summary": {
+      "type": "string",
+      "description": "Specifies a summary of the code review comment."
+    },
     "ref": {
       "type": "string",
       "description": "Indicates the git ref (branch/commit/tag) that this tour associate with."

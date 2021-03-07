@@ -15,12 +15,12 @@ import {
   workspace
 } from "vscode";
 import { FS_SCHEME } from "../constants";
-import { CodeReviewComment, Review, store } from "../store";
+import { StoreCodeReviewComment, Review, store } from "../store";
 
 export class CodeTourFileSystemProvider implements FileSystemProvider {
   private count = 0;
 
-  getCurrentTourStep(): [Review, CodeReviewComment] {
+  getCurrentTourStep(): [Review, StoreCodeReviewComment] {
     const tour = store.activeTour!.review;
     return [tour, tour.comments[store.activeTour!.step]];
   }

@@ -79,7 +79,7 @@ export function generatePreviewContent(content: string) {
     });
 }
 
-export class CodeTourComment implements Comment {
+export class PlayerCodeReviewComment implements Comment {
   public id: string = (++id).toString();
   public contextValue: string = "";
   public author: CommentAuthorInformation = {
@@ -304,7 +304,7 @@ async function renderCurrentStep() {
     }
   }
 
-  const comment = new CodeTourComment(
+  const comment = new PlayerCodeReviewComment(
     content,
     label,
     store.activeTour!.thread!,
