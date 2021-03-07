@@ -50,10 +50,6 @@
     },
     "commands": [
       {
-        "command": "vouch.addDirectoryStep",
-        "title": "Add Review Comment"
-      },
-      {
         "command": "vouch.addSelectionStepPass",
         "title": "Add Review Comment: PASS"
       },
@@ -216,10 +212,6 @@
         {
           "command": "vouch.startTour",
           "when": "vouch:hasTours"
-        },
-        {
-          "command": "vouch.addDirectoryStep",
-          "when": "false"
         },
         {
           "command": "vouch.addSelectionStepPass",
@@ -458,10 +450,6 @@
         }
       ],
       "explorer/context": [
-        {
-          "command": "vouch.addDirectoryStep",
-          "when": "vouch:recording && explorerResourceIsFolder"
-        }
       ],
       "editor/context": [
         {

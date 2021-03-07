@@ -256,25 +256,6 @@ export function registerRecorderCommands() {
     }
   }
 
-  vscode.commands.registerCommand(
-    `${EXTENSION_NAME}.addDirectoryStep`,
-    action(async (uri: vscode.Uri) => {
-      const stepNumber = ++store.activeTour!.step;
-      const tour = store.activeTour!.review;
-
-      const workspaceRoot = getActiveWorkspacePath();
-      const directory = getRelativePath(workspaceRoot, uri.path);
-
-      tour.comments.splice(stepNumber, 0, {
-        directory,
-        description: "",
-        summary: "warn"
-      });
-
-      saveTour(tour);
-    })
-  );
-
   vscode.commands.registerTextEditorCommand(
     `${EXTENSION_NAME}.addSelectionStepPass`,
     action(async (editor: vscode.TextEditor) => {
