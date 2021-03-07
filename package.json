@@ -92,10 +92,6 @@
         "title": "Change Title"
       },
       {
-        "command": "vouch.changeTourTitle",
-        "title": "Change Title"
-      },
-      {
         "command": "vouch.resetProgress",
         "title": "Reset Progress",
         "category": "Vouch"
@@ -275,10 +271,6 @@
           "when": "false"
         },
         {
-          "command": "vouch.changeTourTitle",
-          "when": "false"
-        },
-        {
           "command": "vouch.changeTourDescription",
           "when": "false"
         },
@@ -451,11 +443,6 @@
           "command": "vouch.resetTourProgress",
           "when": "false",
           "group": "basic@2"
-        },
-        {
-          "command": "vouch.changeTourTitle",
-          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?(.active)?$/",
-          "group": "change@1"
         },
         {
           "command": "vouch.changeTourDescription",
