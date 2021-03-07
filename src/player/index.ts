@@ -266,7 +266,7 @@ async function renderCurrentStep() {
         false
       );
       const suffix = stepLabel ? ` (${stepLabel})` : "";
-      content += `← [Previous${suffix}](command:vouch.previousTourStep "Navigate to previous step")`;
+      content += `← [Previous${suffix}](command:vouch.previousTourStep "Navigate to previous comment")`;
     } else {
       const previousTour = getPreviousTour();
       if (previousTour) {
@@ -289,7 +289,7 @@ async function renderCurrentStep() {
         false
       );
       const suffix = stepLabel ? ` (${stepLabel})` : "";
-      content += `${prefix}[Next${suffix}](command:vouch.nextTourStep "Navigate to next step") →`;
+      content += `${prefix}[Next${suffix}](command:vouch.nextTourStep "Navigate to next comment") →`;
     } else if (isFinalStep) {
       const nextTour = getNextTour();
       if (nextTour) {
