@@ -302,13 +302,6 @@ export function registerRecorderCommands() {
   );
 
   vscode.commands.registerTextEditorCommand(
-    `${EXTENSION_NAME}.addSelectionStep`,
-    action(async (editor: vscode.TextEditor) => {
-      addSelectionStep("pass", editor);
-    })
-  );
-
-  vscode.commands.registerTextEditorCommand(
     `${EXTENSION_NAME}.addSelectionStepPass`,
     action(async (editor: vscode.TextEditor) => {
       addSelectionStep("pass", editor);
