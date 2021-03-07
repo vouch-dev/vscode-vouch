@@ -166,7 +166,7 @@
       },
       {
         "command": "vouch.resumeTour",
-        "title": "Resume Tour",
+        "title": "Resume Review Step Through",
         "category": "Vouch"
       },
       {
@@ -176,7 +176,7 @@
       },
       {
         "command": "vouch.showMarkers",
-        "title": "Show Tour Markers",
+        "title": "Show Review Markers",
         "category": "Vouch",
         "icon": "$(eye)"
       },
