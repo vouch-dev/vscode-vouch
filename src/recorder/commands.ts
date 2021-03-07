@@ -547,19 +547,6 @@ export function registerRecorderCommands() {
   );
 
   vscode.commands.registerCommand(
-    `${EXTENSION_NAME}.changeTourStepTitle`,
-    async (node: CodeTourStepNode) => {
-      const step = node.tour.comments[node.stepNumber];
-      step.title = await vscode.window.showInputBox({
-        prompt: `Enter the title for this review comment`,
-        value: step.title || ""
-      });
-
-      saveTour(node.tour);
-    }
-  );
-
-  vscode.commands.registerCommand(
     `${EXTENSION_NAME}.changeTourStepLine`,
     async (comment: PlayerCodeReviewComment) => {
       const step = store.activeTour!.review.comments[store.activeTour!.step];

@@ -84,10 +84,6 @@
         "title": "Change Line"
       },
       {
-        "command": "vouch.changeTourStepTitle",
-        "title": "Change Title"
-      },
-      {
         "command": "vouch.resetProgress",
         "title": "Reset Progress",
         "category": "Vouch"
@@ -260,10 +256,6 @@
         },
         {
           "command": "vouch.changeTourStepLine",
-          "when": "false"
-        },
-        {
-          "command": "vouch.changeTourStepTitle",
           "when": "false"
         },
         {
@@ -475,11 +467,6 @@
           "command": "vouch.moveTourStepForward",
           "when": "viewItem =~ /vouch.tourStep.*(.hasNext)/",
           "group": "basic@2"
-        },
-        {
-          "command": "vouch.changeTourStepTitle",
-          "when": "viewItem =~ /^vouch.tourStep/",
-          "group": "change@1"
         },
         {
           "command": "vouch.editTourAtStep",
