@@ -294,62 +294,33 @@ export function registerRecorderCommands() {
     saveTour(tour);
   }
 
-  vscode.commands.registerCommand(
-    `${EXTENSION_NAME}.addTourStep`,
-    action(async (reply: vscode.CommentReply) => {
-      if (store.activeTour!.thread) {
-        store.activeTour!.thread.dispose();
-      }
-
-      store.activeTour!.thread = reply.thread;
+  vscode.commands.registerTextEditorCommand(
+    `${EXTENSION_NAME}.fileReviewComplete`,
+    action(async (editor: vscode.TextEditor) => {
 
       const tour = store.activeTour!.review;
-      const thread = store.activeTour!.thread;
-
       const workspaceRoot = getActiveWorkspacePath();
-      const file = getRelativePath(workspaceRoot, thread!.uri.path);
+      const file = getRelativePath(workspaceRoot, editor.document.uri.path);
 
-      const step: StoreCodeReviewComment = {
-        file,
-        description: reply.text,
-        summary: "warn"
-      };
-
-      step.line = thread!.range.start.line + 1;
-      store.activeTour!.step++;
-
-      const stepNumber = store.activeTour!.step;
-
-      const selection = getStepSelection();
-      if (selection) {
-        (step as any).selection = selection;
+      // Only allow one file review complete comment per file.
+      for (let comment of tour.comments) {
+        if (!comment.selection && comment.file == file) {
+          await vscode.window.showInformationMessage(
+            `File review already marked as complete.`
+          )
+          return;
+        }
       }
 
-      tour.comments.splice(stepNumber, 0, step);
+      const stepNumber = ++store.activeTour!.step;
+
+      tour.comments.splice(stepNumber, 0, {
+        file,
+        description: "File review complete.",
+        summary: "pass"
+      });
 
       saveTour(tour);
-
-      let label = `Comment #${stepNumber + 1} of ${tour.comments.length}`;
-
-      const contextValues = [];
-      if (tour.comments.length > 1) {
-        contextValues.push("hasPrevious");
-      }
-
-      if (stepNumber < tour.comments.length - 1) {
-        contextValues.push("hasNext");
-      }
-
-      thread!.contextValue = contextValues.join(".");
-      thread!.comments = [
-        new PlayerCodeReviewComment(
-          reply.text,
-          step.summary.toLocaleUpperCase(),
-          label,
-          thread!,
-          vscode.CommentMode.Preview
-        )
-      ];
     })
   );
 

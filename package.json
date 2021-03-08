@@ -50,6 +50,10 @@
     },
     "commands": [
       {
+        "command": "vouch.fileReviewComplete",
+        "title": "File Review Complete"
+      },
+      {
         "command": "vouch.addSelectionStepPass",
         "title": "Add Review Comment: PASS"
       },
@@ -60,11 +64,6 @@
       {
         "command": "vouch.addSelectionStepFail",
         "title": "Add Review Comment: FAIL"
-      },
-      {
-        "command": "vouch.addTourStep",
-        "title": "Add Comment to Review",
-        "enablement": "!commentIsEmpty"
       },
       {
         "command": "vouch.changeTourStepLine",
@@ -214,6 +213,10 @@
           "when": "vouch:hasTours"
         },
         {
+          "command": "vouch.fileReviewComplete",
+          "when": "false"
+        },
+        {
           "command": "vouch.addSelectionStepPass",
           "when": "false"
         },
@@ -223,10 +226,6 @@
         },
         {
           "command": "vouch.addSelectionStepFail",
-          "when": "false"
-        },
-        {
-          "command": "vouch.addTourStep",
           "when": "false"
         },
         {
@@ -310,11 +309,6 @@
         }
       ],
       "comments/commentThread/context": [
-        {
-          "command": "vouch.addTourStep",
-          "group": "inline",
-          "when": "commentController == vouch && commentThreadIsEmpty"
-        }
       ],
       "comments/comment/title": [
         {
@@ -466,6 +460,11 @@
           "command": "vouch.addSelectionStepFail",
           "when": "vouch:recording && editorHasSelection",
           "group": "vouch@3"
+        },
+        {
+          "command": "vouch.fileReviewComplete",
+          "when": "vouch:recording",
+          "group": "vouch@4"
         }
       ]
     },

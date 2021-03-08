@@ -213,6 +213,11 @@ async function renderCurrentStep() {
     return;
   }
 
+  // Don't render for comment if no editor selection lines.
+  if (!step.selection) {
+    return;
+  }
+
   const workspaceRoot = store.activeTour?.workspaceRoot;
   const uri = await getStepFileUri(step, workspaceRoot, currentTour.ref);
 

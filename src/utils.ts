@@ -31,7 +31,14 @@ export function getStepLabel(
       : decodeURIComponent(step.directory || step.file!);
   }
 
-  return `${prefix}${step.summary.toLocaleUpperCase()}: ${label}`;
+  let summary = "";
+  if (step.selection) {
+    summary = step.summary.toLocaleUpperCase();
+  } else {
+    summary = "COMPLETE";
+  }
+
+  return `${prefix}${summary}: ${label}`;
 }
 
 export function getTourTitle(tour: Review) {
