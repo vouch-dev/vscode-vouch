@@ -267,14 +267,7 @@ async function renderCurrentStep() {
     content += "\n\n---\n";
 
     if (hasPreviousStep) {
-      const stepLabel = getStepLabel(
-        currentTour,
-        currentStep - 1,
-        false,
-        false
-      );
-      const suffix = stepLabel ? ` (${stepLabel})` : "";
-      content += `← [Previous${suffix}](command:vouch.previousTourStep "Navigate to previous comment")`;
+      content += `← [Previous](command:vouch.previousTourStep "Navigate to previous comment")`;
     } else {
       const previousTour = getPreviousTour();
       if (previousTour) {
@@ -290,14 +283,7 @@ async function renderCurrentStep() {
 
     const prefix = hasPreviousStep ? " | " : "";
     if (hasNextStep) {
-      const stepLabel = getStepLabel(
-        currentTour,
-        currentStep + 1,
-        false,
-        false
-      );
-      const suffix = stepLabel ? ` (${stepLabel})` : "";
-      content += `${prefix}[Next${suffix}](command:vouch.nextTourStep "Navigate to next comment") →`;
+      content += `${prefix}[Next](command:vouch.nextTourStep "Navigate to next comment") →`;
     } else if (isFinalStep) {
       const nextTour = getNextTour();
       if (nextTour) {
