@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { workspace } from "vscode";
 import { EXTENSION_NAME, FS_SCHEME_CONTENT } from "../constants";
 import { PlayerCodeReviewComment } from "../player";
-import { Review, store } from "../store";
+import { Review, store, StoreCodeReviewComment } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -587,6 +587,65 @@ export function registerRecorderCommands() {
         saveTour(tour);
       }
     }
+  );
+
+  vscode.commands.registerCommand(
+    `${EXTENSION_NAME}.addLineComment`,
+    action(async (reply: vscode.CommentReply) => {
+      if (store.activeTour!.thread) {
+        store.activeTour!.thread.dispose();
+      }
+
+      store.activeTour!.thread = reply.thread;
+
+      const tour = store.activeTour!.review;
+      const thread = store.activeTour!.thread;
+
+      const workspaceRoot = getActiveWorkspacePath();
+      const file = getRelativePath(workspaceRoot, thread!.uri.path);
+
+      const step: StoreCodeReviewComment = {
+        file,
+        description: reply.text,
+        summary: "warn"
+      };
+
+      step.line = thread!.range.start.line + 1;
+      store.activeTour!.step++;
+
+      const stepNumber = store.activeTour!.step;
+
+      // const selection = getStepSelection();
+      // if (selection) {
+      //   (step as any).selection = selection;
+      // }
+
+      tour.comments.splice(stepNumber, 0, step);
+
+      saveTour(tour);
+
+      let label = `Comment #${stepNumber + 1} of ${tour.comments.length}`;
+
+      const contextValues = [];
+      if (tour.comments.length > 1) {
+        contextValues.push("hasPrevious");
+      }
+
+      if (stepNumber < tour.comments.length - 1) {
+        contextValues.push("hasNext");
+      }
+
+      thread!.contextValue = contextValues.join(".");
+      thread!.comments = [
+        new PlayerCodeReviewComment(
+          reply.text,
+          "warn",
+          label,
+          thread!,
+          vscode.CommentMode.Preview
+        )
+      ];
+    })
   );
 
 }

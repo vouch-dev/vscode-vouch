@@ -32,7 +32,7 @@ export function getStepLabel(
   }
 
   let summary = "";
-  if (step.selection) {
+  if (step.selection || step.line) {
     summary = step.summary.toLocaleUpperCase();
   } else {
     summary = "COMPLETE";

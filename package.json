@@ -50,6 +50,11 @@
     },
     "commands": [
       {
+        "command": "vouch.addLineComment",
+        "title": "Save Comment",
+        "enablement": "!commentIsEmpty"
+      },
+      {
         "command": "vouch.fileReviewComplete",
         "title": "File Review Complete",
         "category": "Vouch"
@@ -191,6 +196,10 @@
     "menus": {
       "commandPalette": [
         {
+          "command": "vouch.addLineComment",
+          "when": "false"
+        },
+        {
           "command": "vouch.editTour",
           "when": "vouch:inTour && !vouch:recording && vouch:canEditTour"
         },
@@ -319,6 +328,11 @@
         }
       ],
       "comments/commentThread/context": [
+        {
+          "command": "vouch.addLineComment",
+          "group": "inline",
+          "when": "commentController == vouch && commentThreadIsEmpty"
+        }
       ],
       "comments/comment/title": [
         {

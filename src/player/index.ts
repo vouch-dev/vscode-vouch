@@ -21,13 +21,12 @@ import {
   workspace
 } from "vscode";
 import { SMALL_ICON_URL } from "../constants";
-import { store, Review } from "../store";
+import { Review, store } from "../store";
 import {
   getActiveStepMarker,
   getActiveTourNumber,
   getFileUri,
   getStepFileUri,
-  getStepLabel,
   getTourTitle
 } from "../utils";
 
@@ -213,8 +212,8 @@ async function renderCurrentStep() {
     return;
   }
 
-  // Don't render for comment if no editor selection lines.
-  if (!step.selection) {
+  // Don't render for comment if editor selection lines or single line not specified.
+  if (!step.selection && !step.line) {
     return;
   }
 
