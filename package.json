@@ -55,6 +55,11 @@
         "category": "Vouch"
       },
       {
+        "command": "vouch.fileReviewCompleteTextEditor",
+        "title": "File Review Complete",
+        "category": "Vouch"
+      },
+      {
         "command": "vouch.addSelectionStepPass",
         "title": "Add Review Comment: PASS"
       },
@@ -215,6 +220,10 @@
         },
         {
           "command": "vouch.fileReviewComplete",
+          "when": "false"
+        },
+        {
+          "command": "vouch.fileReviewCompleteTextEditor",
           "when": "vouch:recording"
         },
         {
@@ -445,6 +454,11 @@
         }
       ],
       "explorer/context": [
+        {
+          "command": "vouch.fileReviewComplete",
+          "when": "vouch:recording && !explorerResourceIsFolder",
+          "group": "vouch@1"
+        }
       ],
       "editor/context": [
         {

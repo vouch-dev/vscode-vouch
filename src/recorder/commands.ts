@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { workspace } from "vscode";
 import { EXTENSION_NAME, FS_SCHEME_CONTENT } from "../constants";
 import { PlayerCodeReviewComment } from "../player";
-import { Review, store, StoreCodeReviewComment } from "../store";
+import { Review, store } from "../store";
 import {
   endCurrentCodeTour,
   exportTour,
@@ -294,35 +294,45 @@ export function registerRecorderCommands() {
     saveTour(tour);
   }
 
-  vscode.commands.registerTextEditorCommand(
+  vscode.commands.registerCommand(
     `${EXTENSION_NAME}.fileReviewComplete`,
-    action(async (editor: vscode.TextEditor) => {
-
-      const tour = store.activeTour!.review;
-      const workspaceRoot = getActiveWorkspacePath();
-      const file = getRelativePath(workspaceRoot, editor.document.uri.path);
-
-      // Only allow one file review complete comment per file.
-      for (let comment of tour.comments) {
-        if (!comment.selection && comment.file == file) {
-          await vscode.window.showInformationMessage(
-            `File review already marked as complete.`
-          )
-          return;
-        }
-      }
-
-      const stepNumber = ++store.activeTour!.step;
-
-      tour.comments.splice(stepNumber, 0, {
-        file,
-        description: "File review complete.",
-        summary: "pass"
-      });
-
-      saveTour(tour);
+    action(async (uri: vscode.Uri) => {
+      fileReviewComplete(uri.path);
     })
   );
+
+  vscode.commands.registerTextEditorCommand(
+    `${EXTENSION_NAME}.fileReviewCompleteTextEditor`,
+    action(async (editor: vscode.TextEditor) => {
+      fileReviewComplete(editor.document.uri.path);
+    })
+  );
+
+  async function fileReviewComplete(path: string) {
+    const tour = store.activeTour!.review;
+    const workspaceRoot = getActiveWorkspacePath();
+    const file = getRelativePath(workspaceRoot, path);
+
+    // Only allow one file review complete comment per file.
+    for (let comment of tour.comments) {
+      if (!comment.selection && comment.file == file) {
+        await vscode.window.showInformationMessage(
+          `File review already marked as complete.`
+        )
+        return;
+      }
+    }
+
+    const stepNumber = ++store.activeTour!.step;
+
+    tour.comments.splice(stepNumber, 0, {
+      file,
+      description: "File review complete.",
+      summary: "pass"
+    });
+
+    saveTour(tour);
+  }
 
   vscode.commands.registerCommand(
     `${EXTENSION_NAME}.editTour`,
