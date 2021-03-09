@@ -51,7 +51,8 @@
     "commands": [
       {
         "command": "vouch.fileReviewComplete",
-        "title": "File Review Complete"
+        "title": "File Review Complete",
+        "category": "Vouch"
       },
       {
         "command": "vouch.addSelectionStepPass",
@@ -214,7 +215,7 @@
         },
         {
           "command": "vouch.fileReviewComplete",
-          "when": "false"
+          "when": "vouch:recording"
         },
         {
           "command": "vouch.addSelectionStepPass",
