@@ -414,24 +414,6 @@ export function registerRecorderCommands() {
     }
   );
 
-  async function updateTourProperty(tour: Review, property: string) {
-    const propertyValue = await vscode.window.showInputBox({
-      prompt: `Enter the ${property} for this review`,
-      // @ts-ignore
-      value: tour[property]
-    });
-
-    if (!propertyValue) {
-      return;
-    }
-
-    // @ts-ignore
-    tour[property] = propertyValue;
-    await saveTour(tour);
-
-    return propertyValue;
-  }
-
   function moveStep(
     movement: number,
     node: CodeTourStepNode | PlayerCodeReviewComment

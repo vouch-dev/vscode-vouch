@@ -2,7 +2,7 @@
   "name": "vouch",
   "displayName": "Vouch",
   "description": "VS Code extension that allows you to record and playback reviews of codebases, directly within the editor",
-  "publisher": "vsls-contrib",
+  "publisher": "vouch-dev",
   "version": "0.0.43",
   "author": {
     "name": "rndhouse"
