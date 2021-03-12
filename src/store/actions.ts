@@ -123,48 +123,6 @@ export async function moveCurrentCodeTourForward() {
   _onDidStartTour.fire([store.activeTour!.review, store.activeTour!.step]);
 }
 
-function isLiveShareWorkspace(uri: Uri) {
-  return (
-    uri.path.endsWith("Visual Studio Live Share.code-workspace") ||
-    uri.scheme === "vsls"
-  );
-}
-
-export async function promptForTour(
-  globalState: Memento,
-  workspaceRoot: Uri = getWorkspaceKey(),
-  tours: Review[] = store.tours
-): Promise<boolean> {
-  const key = `${EXTENSION_NAME}:${workspaceRoot}`;
-  if (
-    tours.length > 0 &&
-    !globalState.get(key) &&
-    !isLiveShareWorkspace(workspaceRoot)
-  ) {
-    globalState.update(key, true);
-
-    if (
-      await window.showInformationMessage(
-        "This workspace has guided tours you can take to get familiar with the codebase.",
-        "Start Vouch"
-      )
-    ) {
-      const primaryTour =
-        tours.find(tour => tour.isPrimary) ||
-        tours.find(tour => tour.title.match(/^#?1\s+-/));
-
-      if (primaryTour) {
-        startCodeTour(primaryTour, 0, workspaceRoot, false, undefined, tours);
-        return true;
-      } else {
-        return selectTour(tours, workspaceRoot);
-      }
-    }
-  }
-
-  return false;
-}
-
 export async function exportTour(tour: Review) {
   const newTour = {
     ...tour

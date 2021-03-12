@@ -12,7 +12,6 @@ import { registerDecorators } from "./player/decorator";
 import { registerStatusBar } from "./player/status";
 import { registerCompletionProvider } from "./recorder/completionProvider";
 import { store } from "./store";
-import { promptForTour } from "./store/actions";
 import { discoverTours } from "./store/provider";
 import { initializeStorage } from "./store/storage";
 import { registerTreeProvider } from "./tree";
@@ -26,8 +25,6 @@ export async function activate(context: vscode.ExtensionContext) {
   // the tours contained within it and optionally prompt the user.
   if (vscode.workspace.workspaceFolders) {
     await discoverTours();
-
-    promptForTour(context.globalState);
 
     registerDecorators();
 

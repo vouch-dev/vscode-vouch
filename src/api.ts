@@ -6,7 +6,6 @@ import {
   endCurrentCodeTour,
   exportTour,
   onDidEndTour,
-  promptForTour,
   recordTour,
   selectTour,
   startCodeTour
@@ -17,7 +16,6 @@ export function initializeApi(context: ExtensionContext) {
     endCurrentTour: endCurrentCodeTour,
     exportTour,
     onDidEndTour,
-    promptForTour: promptForTour.bind(null, context.globalState),
     recordTour,
     startTour: startCodeTour,
     selectTour
