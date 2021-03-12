@@ -109,7 +109,7 @@
       },
       {
         "command": "vouch.endTour",
-        "title": "End Review",
+        "title": "End Review Step Through",
         "category": "Vouch",
         "icon": "$(debug-stop)"
       },
