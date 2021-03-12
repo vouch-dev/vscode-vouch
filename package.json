@@ -221,7 +221,7 @@
         },
         {
           "command": "vouch.resumeTour",
-          "when": "vouch:inTour"
+          "when": "vouch:inTour && !vouch:recording"
         },
         {
           "command": "vouch.startTour",
@@ -398,7 +398,7 @@
         },
         {
           "command": "vouch.resumeTour",
-          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
+          "when": "!vouch:recording && viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
           "group": "active@1"
         },
         {
