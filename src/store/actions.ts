@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { commands, EventEmitter, Memento, Uri, window } from "vscode";
+import { commands, EventEmitter, Uri, window } from "vscode";
 import { store, Review } from ".";
 import { EXTENSION_NAME, FS_SCHEME, FS_SCHEME_CONTENT } from "../constants";
 import { startPlayer, stopPlayer } from "../player";
 import {
   getStepFileUri,
-  getWorkspaceKey,
   getWorkspaceUri,
   readUriContents
 } from "../utils";
