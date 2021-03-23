@@ -470,7 +470,7 @@
       "explorer/context": [
         {
           "command": "vouch.fileReviewComplete",
-          "when": "vouch:recording && !explorerResourceIsFolder",
+          "when": "vouch:recording",
           "group": "vouch@1"
         }
       ],

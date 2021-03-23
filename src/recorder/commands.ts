@@ -317,7 +317,7 @@ export function registerRecorderCommands() {
     for (let comment of tour.comments) {
       if (!comment.selection && comment.file == file) {
         await vscode.window.showInformationMessage(
-          `File review already marked as complete.`
+          `Review already marked as complete for file/directory contents.`
         )
         return;
       }
@@ -327,7 +327,7 @@ export function registerRecorderCommands() {
 
     tour.comments.splice(stepNumber, 0, {
       file,
-      description: "File review complete.",
+      description: "Review complete for file or directory contents.",
       summary: "pass"
     });
 
