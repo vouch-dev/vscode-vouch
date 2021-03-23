@@ -56,12 +56,12 @@
       },
       {
         "command": "vouch.fileReviewComplete",
-        "title": "File Review Complete",
+        "title": "Remaining Lines PASS",
         "category": "Vouch"
       },
       {
         "command": "vouch.fileReviewCompleteTextEditor",
-        "title": "File Review Complete",
+        "title": "Remaining Lines PASS",
         "category": "Vouch"
       },
       {
