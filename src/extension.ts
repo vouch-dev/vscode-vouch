@@ -14,8 +14,9 @@ import { registerCompletionProvider } from "./recorder/completionProvider";
 import { store } from "./store";
 import { discoverTours } from "./store/provider";
 import { initializeStorage } from "./store/storage";
+import { startCodeTour } from "./store/actions";
 import { registerTreeProvider } from "./tree";
-import { updateMarkerTitles } from "./utils";
+import { updateMarkerTitles, getWorkspaceUri } from "./utils";
 
 export async function activate(context: vscode.ExtensionContext) {
   registerCommands();
@@ -37,6 +38,22 @@ export async function activate(context: vscode.ExtensionContext) {
       "vouch:showingMarkers",
       store.showMarkers
     );
+
+    // Start primary review in edit mode.
+    if (store.hasTours) {
+      const primary_tours = store.tours.filter(tour => tour.isPrimary);
+      if (primary_tours.length >= 1) {
+        const tour = primary_tours[0];
+        startCodeTour(
+          store.tours[0],
+          0,
+          getWorkspaceUri(tour),
+          true,
+          true,
+          store.tours
+        )
+      }
+    }
 
     initializeGitApi();
 
