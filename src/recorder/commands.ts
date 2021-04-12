@@ -327,7 +327,7 @@ export function registerRecorderCommands() {
 
     tour.comments.splice(stepNumber, 0, {
       file,
-      description: "Review complete for file or directory contents.",
+      description: "Review complete.",
       summary: "pass"
     });
 
