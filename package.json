@@ -109,7 +109,13 @@
       },
       {
         "command": "vouch.endTour",
-        "title": "End Review Step Through",
+        "title": "Stop Step Through",
+        "category": "Vouch",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "vouch.endReviewEditing",
+        "title": "Stop Editing",
         "category": "Vouch",
         "icon": "$(debug-stop)"
       },
@@ -167,7 +173,7 @@
       },
       {
         "command": "vouch.resumeTour",
-        "title": "Resume Review Step Through",
+        "title": "Resume Step Through",
         "category": "Vouch"
       },
       {
@@ -206,6 +212,10 @@
         {
           "command": "vouch.endTour",
           "when": "vouch:inTour"
+        },
+        {
+          "command": "vouch.endReviewEditing",
+          "when": "vouch:inTour && vouch:recording && vouch:canEditTour"
         },
         {
           "command": "vouch.previewTour",
@@ -314,7 +324,12 @@
         {
           "command": "vouch.endTour",
           "group": "inline@3",
-          "when": "commentController == vouch"
+          "when": "!vouch:recording && commentController == vouch"
+        },
+        {
+          "command": "vouch.endReviewEditing",
+          "group": "inline@3",
+          "when": "vouch:recording && commentController == vouch"
         },
         {
           "command": "vouch.editTour",
@@ -388,7 +403,12 @@
       "view/item/context": [
         {
           "command": "vouch.endTour",
-          "when": "viewItem =~ /^vouch.tour(.recording)?.active/",
+          "when": "!vouch:recording && viewItem =~ /^vouch.tour(.recording)?.active/",
+          "group": "inline@1"
+        },
+        {
+          "command": "vouch.endReviewEditing",
+          "when": "vouch:recording && viewItem =~ /^vouch.tour(.recording)?.active/",
           "group": "inline@1"
         },
         {
@@ -403,7 +423,12 @@
         },
         {
           "command": "vouch.endTour",
-          "when": "viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
+          "when": "!vouch:recording && viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
+          "group": "active@2"
+        },
+        {
+          "command": "vouch.endReviewEditing",
+          "when": "vouch:recording && viewItem =~ /^vouch.tour(.primary)?(.recording)?.active$/",
           "group": "active@2"
         },
         {

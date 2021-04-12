@@ -180,6 +180,11 @@ export function registerPlayerCommands() {
   );
 
   vscode.commands.registerCommand(
+    `${EXTENSION_NAME}.endReviewEditing`,
+    endCurrentCodeTour
+  );
+
+  vscode.commands.registerCommand(
     `${EXTENSION_NAME}.previousTourStep`,
     moveCurrentCodeTourBackward
   );
