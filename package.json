@@ -528,7 +528,7 @@
           "id": "vouch.tours",
           "name": "Vouch",
           "visibility": "visible",
-          "when": "workspaceFolderCount != 0 || vouch:inTour"
+          "when": "vouch:hasTours"
         }
       ]
     },
