@@ -522,7 +522,22 @@
         }
       ]
     },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vouch-tree-container",
+          "title": "hi",
+          "icon": "resources/todo-tree-container.svg"
+        }
+      ]
+    },
     "views": {
+      "vouch-tree-container": [
+        {
+          "id": "vouch-tree-comments",
+          "name": "Vouch"
+        }
+      ],
       "explorer": [
         {
           "id": "vouch.tours",
