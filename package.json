@@ -3,7 +3,7 @@
   "displayName": "Vouch",
   "description": "VS Code extension that allows you to record and playback reviews of codebases, directly within the editor",
   "publisher": "vouch-dev",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "rndhouse"
   },
@@ -28,7 +28,6 @@
     "Sharing"
   ],
   "extensionKind": [
-    "web",
     "workspace"
   ],
   "activationEvents": [
@@ -608,5 +607,10 @@
   "prettier": {
     "arrowParens": "avoid",
     "trailingComma": "none"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
   }
 }
